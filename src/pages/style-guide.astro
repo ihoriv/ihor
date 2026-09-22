@@ -1,0 +1,185 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const colors = [
+  { name: '--color-black', label: 'Black (base text / dark bg)', value: '#080807' },
+  { name: '--color-white', label: 'White (base bg / light text)', value: '#e8e8e3' },
+  { name: '--color-accent', label: 'Accent', value: '#ea4e42' },
+];
+
+const type = [
+  { class: 'sg-h1', label: 'H1 — 6.5rem / Mariupol', sample: 'Enterprise level websites' },
+  { class: 'sg-h3-big', label: 'H3 big — 2rem / Nyght Serif italic', sample: 'and clients.' },
+  { class: 'sg-h3', label: 'H3 — 1.75rem / Mariupol', sample: 'A website is six different jobs.' },
+  { class: 'sg-h2', label: 'H2 — 1.5rem / Mariupol', sample: 'Different services, same result' },
+  { class: 'sg-h4', label: 'H4 — 1.375rem / Mariupol', sample: 'Website Build' },
+  { class: 'sg-body-lg', label: 'Body large — 1.25rem', sample: 'I think about your website the way your sales team does.' },
+  { class: 'sg-body-md', label: 'Body medium — 1.125rem', sample: 'My name is Ihor and I create websites.' },
+  { class: 'sg-body', label: 'Body — 1rem', sample: 'One specialist handles the full project, start to finish.' },
+  { class: 'sg-body-sm', label: 'Body small — 0.875rem', sample: 'Kharkiv, Ukraine' },
+];
+
+const spacing = [4, 8, 16, 24, 32, 48, 64, 80, 96, 128, 160];
+---
+
+<Layout title="Style guide — ihor.me" noindex>
+  <section class="style-guide">
+    <h1 class="sg-page-title">Design tokens</h1>
+
+    <h2 class="sg-section-title">Color</h2>
+    <div class="sg-swatch-row">
+      {
+        colors.map((c) => (
+          <div class="sg-swatch">
+            <div class="sg-swatch-block" style={`background:${c.value}`} />
+            <p class="sg-swatch-label">{c.label}</p>
+            <p class="sg-swatch-value">{c.value}</p>
+          </div>
+        ))
+      }
+    </div>
+    <div class="sg-swatch-row">
+      <div class="sg-section-black-demo">
+        <p class="sg-body">.section-black inverts background/foreground — same two tokens, opposite roles.</p>
+      </div>
+    </div>
+
+    <h2 class="sg-section-title">Type scale</h2>
+    <div class="sg-type-list">
+      {
+        type.map((t) => (
+          <div class="sg-type-row">
+            <p class="sg-type-label">{t.label}</p>
+            <p class={t.class}>{t.sample}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <h2 class="sg-section-title">Spacing scale</h2>
+    <div class="sg-spacing-list">
+      {
+        spacing.map((s) => (
+          <div class="sg-spacing-row">
+            <p class="sg-spacing-label">{s}px</p>
+            <div class="sg-spacing-bar" style={`width:${s}px`} />
+          </div>
+        ))
+      }
+    </div>
+
+    <h2 class="sg-section-title">Radii &amp; shadow</h2>
+    <div class="sg-swatch-row">
+      <div class="sg-radius-demo sg-radius-card">card 0.75rem</div>
+      <div class="sg-radius-demo sg-radius-pill">pill 1000rem</div>
+      <div class="sg-radius-demo sg-shadow-demo">inset highlight</div>
+    </div>
+
+    <h2 class="sg-section-title">Buttons</h2>
+    <div class="sg-swatch-row">
+      <a class="button" href="#"><span class="button-label">Start a project</span></a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .style-guide {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: var(--space-64) var(--space-24) var(--space-128);
+  }
+  .sg-page-title {
+    font-family: var(--font-body);
+    font-size: var(--text-h1);
+    margin: 0 0 var(--space-48);
+  }
+  .sg-section-title {
+    font-family: var(--font-body);
+    font-size: var(--text-h3);
+    margin: var(--space-96) 0 var(--space-24);
+    border-top: 1px solid color-mix(in srgb, var(--foreground) 15%, transparent);
+    padding-top: var(--space-48);
+  }
+  .sg-swatch-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-24);
+  }
+  .sg-swatch {
+    width: 12rem;
+  }
+  .sg-swatch-block {
+    height: 6rem;
+    border-radius: var(--radius-card);
+    border: 1px solid color-mix(in srgb, var(--foreground) 15%, transparent);
+  }
+  .sg-swatch-label {
+    font-size: var(--text-body-sm);
+    margin: var(--space-8) 0 0;
+  }
+  .sg-swatch-value {
+    font-size: var(--text-body-sm);
+    opacity: 0.6;
+    margin: 0;
+  }
+  .sg-section-black-demo {
+    background: var(--color-black);
+    color: var(--color-white);
+    border-radius: var(--radius-card);
+    padding: var(--space-24);
+    width: 100%;
+  }
+  .sg-type-row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-24);
+    padding: var(--space-16) 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--foreground) 10%, transparent);
+  }
+  .sg-type-label {
+    width: 14rem;
+    flex: none;
+    font-size: var(--text-body-sm);
+    opacity: 0.6;
+    margin: 0;
+  }
+  .sg-h1 { font-family: var(--font-body); font-size: var(--text-h1); line-height: 0.9; letter-spacing: -0.01em; margin: 0; }
+  .sg-h3-big { font-family: var(--font-display); font-style: italic; font-size: var(--text-h3-big); line-height: 0.8; letter-spacing: -0.01em; margin: 0; }
+  .sg-h3 { font-family: var(--font-body); font-size: var(--text-h3); line-height: 1; letter-spacing: -0.02em; margin: 0; }
+  .sg-h2 { font-family: var(--font-body); font-size: var(--text-h2); line-height: 0.9; letter-spacing: -0.02em; margin: 0; }
+  .sg-h4 { font-family: var(--font-body); font-size: var(--text-h4); margin: 0; }
+  .sg-body-lg { font-size: var(--text-body-lg); margin: 0; }
+  .sg-body-md { font-size: var(--text-body-md); margin: 0; }
+  .sg-body { font-size: var(--text-body); margin: 0; }
+  .sg-body-sm { font-size: var(--text-body-sm); margin: 0; }
+  .sg-spacing-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-16);
+    padding: var(--space-4) 0;
+  }
+  .sg-spacing-label {
+    width: 4rem;
+    flex: none;
+    font-size: var(--text-body-sm);
+    opacity: 0.6;
+    margin: 0;
+  }
+  .sg-spacing-bar {
+    height: var(--space-16);
+    background: var(--accent);
+    border-radius: var(--radius-pill);
+  }
+  .sg-radius-demo {
+    width: 10rem;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-body-sm);
+    border: 1px solid color-mix(in srgb, var(--foreground) 15%, transparent);
+  }
+  .sg-radius-card { border-radius: var(--radius-card); }
+  .sg-radius-pill { border-radius: var(--radius-pill); }
+  .sg-shadow-demo { box-shadow: var(--shadow-inset-highlight); background: var(--color-black); color: var(--color-white); border-radius: var(--radius-card); }
+</style>

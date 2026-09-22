@@ -1,0 +1,2069 @@
+/*
+ * main.css — the authored stylesheet for this starter.
+ *
+ * Convention (keeps the in-app visual editor reliable): every styled element
+ * carries ONE semantic class, and each class is defined by exactly ONE rule
+ * here. No inline styles, no utility soup. Edit a class's rule and every
+ * element using it updates. Responsive overrides go in the @media block at the
+ * bottom (one breakpoint set), mirroring the rule above it.
+ */
+
+/* ── Fonts (self-hosted, from the Webflow export) ───────────────────── */
+@font-face {
+  font-family: 'Mariupol';
+  src: url('/fonts/Mariupol-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nyght Serif';
+  src: url('/fonts/NyghtSerif-RegularItalic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ── Design tokens ───────────────────────────────────────────────── */
+:root {
+  /* base colors — only 3 real colors, everything else derives from these */
+  --color-black: #080807;
+  --color-white: #e8e8e3;
+  --color-accent: #ea4e42;
+
+  /* semantic roles — light section is the default; .section-black swaps them */
+  --background: var(--color-white);
+  --foreground: var(--color-black);
+  --accent: var(--color-accent);
+  --overlay-on-dark: color-mix(in srgb, white 12%, transparent);
+  --scrim: color-mix(in srgb, black 20%, transparent);
+
+  --font-display: 'Nyght Serif', 'Times New Roman', serif;
+  --font-body: 'Mariupol', Arial, sans-serif;
+
+  /* fluid root size: one continuous curve (320px → 1440px), no breakpoint seams */
+  font-size: clamp(1rem, 0.93rem + 0.36vw, 1.25rem);
+
+  /* type scale — each token is its own fluid curve (375px → 1440px) so
+     nothing jumps at a breakpoint edge; values land close to the old
+     per-breakpoint numbers at those reference widths, but interpolate
+     smoothly between them. */
+  --text-h1: clamp(3rem, 1.77rem + 5.26vw, 6.5rem);
+  --text-h2: clamp(1.375rem, 1.33rem + 0.19vw, 1.5rem);
+  --text-h3: clamp(1.5rem, 1.41rem + 0.38vw, 1.75rem);
+  --text-h3-big: clamp(1.5rem, 1.32rem + 0.75vw, 2rem);
+  --text-h4: clamp(1.25rem, 1.21rem + 0.19vw, 1.375rem);
+  --text-body: clamp(0.875rem, 0.83rem + 0.19vw, 1rem);
+  --text-body-sm: clamp(0.75rem, 0.71rem + 0.19vw, 0.875rem);
+  --text-body-md: clamp(1rem, 0.96rem + 0.19vw, 1.125rem);
+  --text-body-lg: clamp(1.125rem, 1.08rem + 0.19vw, 1.25rem);
+
+  /* spacing scale */
+  --space-1: 0.0625rem;
+  --space-2: 0.125rem;
+  --space-4: 0.25rem;
+  --space-6: 0.375rem;
+  --space-8: 0.5rem;
+  --space-12: 0.75rem;
+  --space-16: 1rem;
+  --space-20: 1.25rem;
+  --space-24: 1.5rem;
+  --space-28: 1.75rem;
+  --space-32: 2rem;
+  --space-36: 2.25rem;
+  --space-40: 2.5rem;
+  --space-42: 2.625rem;
+  --space-48: 3rem;
+  --space-56: 3.5rem;
+  --space-64: 4rem;
+  --space-72: 4.5rem;
+  --space-80: 5rem;
+  --space-96: 6rem;
+  --space-112: 7rem;
+  --space-128: 8rem;
+  --space-160: 10rem;
+
+  --gap-block-half: var(--space-80);
+  --gap-block-full: var(--space-160);
+
+  --radius-card: 0.75rem;
+  --radius-pill: 1000rem;
+
+  --shadow-inset-highlight: inset 0 1px 5px rgba(255, 255, 255, 0.6);
+
+  --ease-default: 0.35s ease;
+  --ease-bounce: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  --maxw: 82.5rem;
+}
+
+@media screen and (max-width: 767px) {
+  :root {
+    --gap-block-half: var(--space-56);
+    --gap-block-full: var(--space-112);
+  }
+}
+
+/* ── Base elements ───────────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+}
+
+html.is--scroll-locked {
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: 1.28;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+em {
+  font-family: var(--font-display);
+  font-style: italic;
+}
+
+/* accent-colored italic emphasis is a heading-only treatment — body-text
+   <em> (eyebrow copy, bio paragraphs) stays italic-serif but inherits color */
+h1 em,
+h2 em,
+h3 em {
+  color: var(--accent);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-weight: 400;
+}
+
+h1 {
+  font-size: var(--text-h1);
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+}
+
+h2 {
+  font-size: var(--text-h2);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+
+h3 {
+  font-size: var(--text-h3);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+p {
+  margin: 0;
+}
+
+/* .section-black inverts the two base tokens rather than using a separate
+   dark palette — every section on this page is one of these two states. */
+.section-black {
+  background: var(--color-black);
+  color: var(--color-white);
+}
+
+/* ── Layout helpers ──────────────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: calc(var(--maxw) + 2rem);
+  margin: 0 auto;
+  padding-left: var(--space-16);
+  padding-right: var(--space-16);
+  position: relative;
+  z-index: 7;
+}
+
+.u---spacer {
+  height: var(--gap-block-half);
+}
+
+.u---spacer.is--full {
+  height: var(--gap-block-full);
+}
+
+/* Shared "big" heading style — Nyght Serif italic, used for menu labels,
+   the footer heading, FAQ/approach card titles, and hover-reveal captions. */
+.h-big-heading {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--text-h3-big);
+  line-height: 0.8;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+/* Section heading ("h2-rt" in the source) — centered rich-text H2 with an
+   italic accent word inside <em>. */
+.section-heading {
+  max-width: 26.5rem;
+  font-size: var(--text-h2);
+  text-align: center;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  line-height: 0.9;
+  margin: 0 auto;
+}
+
+.section-heading.is--left {
+  text-align: left;
+  margin-left: 0;
+  margin-right: 0;
+  max-width: none;
+}
+
+.section-content {
+  display: flex;
+  flex-flow: column;
+  gap: var(--space-42);
+}
+
+/* ── Buttons / text links ────────────────────────────────────────── */
+.button {
+  display: flex;
+  gap: var(--space-6);
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8) var(--space-12);
+  background: var(--color-black);
+  color: var(--color-white);
+  text-align: center;
+  position: relative;
+  border: none;
+  appearance: none;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button_icon-wrap {
+  display: flex;
+  flex: none;
+  width: var(--space-16);
+  aspect-ratio: 1;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-white);
+}
+
+.button-icon {
+  display: flex;
+  width: var(--space-12);
+  color: var(--color-black);
+  transition: transform 0.35s;
+}
+
+.button:hover .button-icon {
+  transform: rotate(180deg);
+}
+
+.text-link {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  line-height: 1;
+  height: 1lh;
+}
+
+.text-link.is--menu {
+  padding-bottom: var(--space-6);
+}
+
+.text-link__label {
+  display: block;
+  text-shadow: 0 1em 0 currentColor;
+  transition: transform 0.35s;
+}
+
+.button:hover .text-link__label {
+  transform: translate(0, -1em);
+}
+
+/* ── Header / nav ────────────────────────────────────────────────── */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 64;
+}
+
+/* the header's own row must stay above .menu-wrap (z-index 63, also fixed and
+   a sibling within the header) once the menu is open, or the Menu button
+   becomes invisible and unclickable — nothing to close the menu with */
+.header > .container {
+  z-index: 70;
+}
+
+.header_content-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-20);
+  padding-bottom: var(--space-20);
+}
+
+.header-logo {
+  display: flex;
+  width: 3.25rem;
+  color: var(--accent);
+}
+
+.menu-button {
+  display: flex;
+  min-width: 9.125rem;
+  align-items: center;
+  gap: var(--space-4);
+  padding-top: var(--space-4);
+  padding-bottom: var(--space-4);
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+}
+
+.menu-button_lines {
+  display: flex;
+  position: relative;
+  width: var(--space-24);
+  aspect-ratio: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-line {
+  position: absolute;
+  width: 83%;
+  height: var(--space-1);
+  background: var(--color-black);
+  transition: transform 0.35s ease;
+}
+
+.menu-line.is--top {
+  transform: translate(0, -0.17rem);
+}
+
+.menu-line.is--bottom {
+  transform: translate(0, 0.17rem);
+}
+
+.menu-button[aria-expanded='true'] .menu-line.is--top {
+  transform: translate(0, 0) rotate(45deg);
+}
+
+.menu-button[aria-expanded='true'] .menu-line.is--bottom {
+  transform: translate(0, 0) rotate(-45deg);
+}
+
+.menu-wrap {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 63;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 16px;
+  padding: var(--space-80) var(--space-20) var(--space-20);
+  background: var(--scrim);
+  backdrop-filter: blur(10px);
+}
+
+.menu-wrap.is--open {
+  display: grid;
+}
+
+.menu-card {
+  display: flex;
+  align-items: flex-end;
+  padding: var(--space-24);
+  background: var(--color-white);
+  backdrop-filter: blur(30px);
+  color: var(--accent);
+  grid-column: span 1;
+  overflow: hidden;
+}
+
+.menu-card:hover {
+  background: #fff;
+}
+
+/* The big italic title needs its full natural glyph height (ascenders,
+   descenders, script overshoot) to render without cropping — line-height:0.8
+   is deliberately tighter than the font's own metrics, so this can't use the
+   generic .text-link 1lh-clip + text-shadow-duplicate trick (the shadow copy
+   would sit outside a box that tight and never get clipped, showing both
+   copies at once). Instead the hover swap uses two real, independently
+   opacity-animated labels, so nothing needs clipping. */
+.menu-card .text-link {
+  position: relative;
+  height: auto;
+  overflow: visible;
+}
+
+.menu-card .text-link__label {
+  display: block;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--text-h3-big);
+  line-height: 0.8;
+  text-shadow: none;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+}
+
+.menu-card .text-link__label--dup {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  opacity: 0;
+}
+
+.menu-card:hover .text-link__label:not(.text-link__label--dup) {
+  transform: translate(0, -100%);
+  opacity: 0;
+}
+
+.menu-card:hover .text-link__label--dup {
+  transform: translate(0, -100%);
+  opacity: 1;
+}
+
+.menu-card_double {
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 16px;
+}
+
+/* first nav item spans 2 columns, matching the source layout */
+.menu-wrap > .menu-card:first-child {
+  grid-column: span 2;
+}
+
+/* ── Progressive blur (fixed vignette at top of viewport) ───────── */
+.progressive-blur_wrap {
+  --blur: 3rem;
+  --ratio: 1.9;
+  position: fixed;
+  top: 0;
+  left: -1%;
+  right: -1%;
+  z-index: 44;
+  height: 6rem;
+  overflow: clip;
+  pointer-events: none;
+}
+
+.progressive-blur_panel {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
+
+.progressive-blur_panel.is-1 {
+  backdrop-filter: blur(var(--blur));
+  mask: linear-gradient(#000 0% 10%, #0000 30%);
+}
+
+.progressive-blur_panel.is-2 {
+  backdrop-filter: blur(calc(var(--blur) / var(--ratio)));
+  mask: linear-gradient(#0000 0%, #000 10% 20%, #0000 40%);
+}
+
+.progressive-blur_panel.is-3 {
+  backdrop-filter: blur(calc(var(--blur) / (var(--ratio) * var(--ratio))));
+  mask: linear-gradient(#0000 0%, #000 20% 30%, #0000 50%);
+}
+
+.progressive-blur_panel.is-4 {
+  backdrop-filter: blur(calc(var(--blur) / pow(var(--ratio), 3)));
+  mask: linear-gradient(#0000 10%, #000 30% 40%, #0000 60%);
+}
+
+.progressive-blur_panel.is-5 {
+  backdrop-filter: blur(calc(var(--blur) / pow(var(--ratio), 4)));
+  mask: linear-gradient(#0000 20%, #000 40% 50%, #0000 70%);
+}
+
+.progressive-blur_panel.is-6 {
+  backdrop-filter: blur(calc(var(--blur) / pow(var(--ratio), 5)));
+  mask: linear-gradient(#0000 30%, #000 50% 60%, #0000 80%);
+}
+
+.progressive-blur_panel.is-7 {
+  backdrop-filter: blur(calc(var(--blur) / pow(var(--ratio), 6)));
+  mask: linear-gradient(#0000 40%, #000 60% 70%, #0000 90%);
+}
+
+.progressive-blur_panel.is-8 {
+  backdrop-filter: blur(calc(var(--blur) / pow(var(--ratio), 7)));
+  mask: linear-gradient(#0000 50%, #000 70% 80%, #0000 100%);
+}
+
+.progressive-blur_panel.is-9 {
+  backdrop-filter: blur(calc(var(--blur) / pow(var(--ratio), 8)));
+  mask: linear-gradient(#0000 60%, #000 80% 90%, #0000 100%);
+}
+
+.progressive-blur_panel.is-10 {
+  backdrop-filter: blur(calc(var(--blur) / pow(var(--ratio), 9)));
+  mask: linear-gradient(#0000 70%, #000 90%, #0000 100%);
+}
+
+/* ── Footer ──────────────────────────────────────────────────────── */
+.footer {
+  position: relative;
+}
+
+.footer_content-wrap {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  gap: var(--space-36);
+  text-align: center;
+}
+
+.footer-globe {
+  display: flex;
+  width: var(--space-80);
+}
+
+.footer_socials-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.footer_social-link {
+  display: flex;
+  flex: none;
+  width: 3.5rem;
+  aspect-ratio: 1;
+  align-items: center;
+  justify-content: center;
+  border: var(--space-1) solid #fff;
+  border-radius: var(--radius-pill);
+  background: var(--overlay-on-dark);
+}
+
+.footer_social-link.shadows {
+  color: var(--accent);
+  box-shadow: var(--shadow-inset-highlight);
+}
+
+.footer_social-link.shadows:hover {
+  background: rgba(252, 252, 252, 0.3);
+}
+
+.footer_social-link.shadows:active {
+  transform: scale(0.97);
+}
+
+.footer_social-icon {
+  display: flex;
+  width: var(--space-24);
+}
+
+.footer_button--links {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  gap: var(--space-24);
+  text-align: center;
+}
+
+.footer_legal-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+}
+
+.legal-link {
+  color: var(--accent);
+}
+
+.legal-link:hover {
+  color: #1d1c1c;
+}
+
+.legal-link:active {
+  color: #d7d1d1;
+}
+
+.legal-links_divider {
+  display: flex;
+  flex: none;
+  width: var(--space-8);
+  color: var(--scrim);
+}
+
+.footer_time {
+  display: flex;
+  flex-flow: column;
+}
+
+.footer-time-city {
+  font-size: var(--text-body-sm);
+  margin: 0;
+}
+
+.time-wrap {
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.footer_legal-texts {
+  display: flex;
+  flex-flow: column;
+  gap: var(--space-2);
+  color: var(--scrim);
+}
+
+.footer-legal-line {
+  font-size: var(--text-body-sm);
+  margin: 0;
+}
+
+/* ── Video popup (shared modal player) ──────────────────────────── */
+.video-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 300ms ease, visibility 0ms linear 300ms;
+}
+
+.video-popup.is--open {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 300ms ease, visibility 0ms linear 0ms;
+}
+
+.video-popup_overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--scrim);
+  backdrop-filter: blur(8px);
+}
+
+.video-popup_dialog {
+  position: relative;
+  width: min(1120px, 92vw);
+  max-height: 90vh;
+  background: var(--color-black);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  transform: scale(0.94) translateY(16px);
+  opacity: 0;
+  transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1), opacity 300ms ease;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.55);
+}
+
+.video-popup.is--open .video-popup_dialog {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+.video-popup_close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: var(--scrim);
+  color: var(--color-white);
+  cursor: pointer;
+  transition: background 150ms ease, transform 150ms ease;
+}
+
+.video-popup_close:hover,
+.video-popup_close:focus-visible {
+  background: rgba(0, 0, 0, 0.6);
+  transform: scale(1.06);
+}
+
+.video-popup_video-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+
+.video-popup_video-wrap video {
+  position: absolute;
+  inset: 0;
+  display: none;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+
+.video-popup_video-wrap video.is--active {
+  display: block;
+}
+
+.video-popup_controls {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 40px 20px 16px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.55) 55%, transparent 100%);
+  transition: opacity 250ms ease;
+}
+
+/* In fullscreen only, the controls panel hides itself after a second of no
+   mouse movement (site.js toggles .is--controls-idle) and fades back in as
+   soon as the mouse moves — the windowed popup always keeps it visible. */
+.video-popup_dialog:fullscreen.is--controls-idle .video-popup_controls {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.video-popup_dialog:-webkit-full-screen.is--controls-idle .video-popup_controls {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.video-popup_play-btn {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-white);
+  cursor: pointer;
+  transition: background 150ms ease, transform 150ms ease;
+}
+
+.video-popup_play-btn:hover,
+.video-popup_play-btn:focus-visible {
+  background: var(--overlay-on-dark);
+  transform: scale(1.08);
+}
+
+.video-popup_progress {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  top: 14px;
+  padding: 8px 0;
+  cursor: pointer;
+  outline: none;
+}
+
+.video-popup_progress-track {
+  position: relative;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.25);
+  transition: height 120ms ease;
+}
+
+.video-popup_progress:hover .video-popup_progress-track,
+.video-popup_progress:focus-visible .video-popup_progress-track {
+  height: 5px;
+}
+
+.video-popup_progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+.video-popup_progress-handle {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 120ms ease;
+  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.15);
+}
+
+.video-popup_progress:hover .video-popup_progress-handle,
+.video-popup_progress:focus-visible .video-popup_progress-handle {
+  opacity: 1;
+}
+
+.video-popup_time {
+  flex: none;
+  font-size: 13px;
+  color: var(--color-white);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  opacity: 0.9;
+}
+
+.video-popup_time-sep {
+  margin: 0 4px;
+  opacity: 0.6;
+}
+
+.video-popup_volume {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.video-popup_volume-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-white);
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+
+.video-popup_volume-btn:hover,
+.video-popup_volume-btn:focus-visible {
+  background: var(--overlay-on-dark);
+}
+
+.video-popup_fullscreen-btn {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-white);
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+
+.video-popup_fullscreen-btn:hover,
+.video-popup_fullscreen-btn:focus-visible {
+  background: var(--overlay-on-dark);
+}
+
+/* Fullscreen is requested on the dialog (not the <video>) so our custom
+   controls stay visible instead of being replaced by the browser's own. */
+.video-popup_dialog:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  max-height: 100vh;
+  max-width: none;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+}
+
+.video-popup_dialog:-webkit-full-screen {
+  width: 100vw;
+  height: 100vh;
+  max-height: 100vh;
+  max-width: none;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+}
+
+.video-popup_dialog:fullscreen .video-popup_video-wrap {
+  height: 100%;
+  aspect-ratio: auto;
+}
+
+.video-popup_dialog:-webkit-full-screen .video-popup_video-wrap {
+  height: 100%;
+  aspect-ratio: auto;
+}
+
+.video-popup_volume-slider {
+  width: 80px;
+  height: 3px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+/* ── Scroll reveal (fade + rise into view) ──────────────────────── */
+[data-reveal] {
+  transform: translateY(28px);
+  transition: transform 0.7s ease;
+}
+
+[data-reveal].is--in {
+  transform: translateY(0);
+}
+
+/* Plain reveal targets (no opacity system of their own) also fade in.
+   Approach cards and FAQ cards already own an opacity story — dimmed while
+   closed, full while open — so they're excluded here and only get the
+   rise, keeping that dimming intact through the scroll-reveal. */
+[data-reveal]:not(.approach-card):not(.faq_card-wrap) {
+  opacity: 0;
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+[data-reveal].is--in:not(.approach-card):not(.faq_card-wrap) {
+  opacity: 1;
+}
+
+/* ── Flip-in reveal (GSAP-driven; base state only, JS animates in) ──── */
+[data-flip-in] {
+  opacity: 0;
+}
+
+[data-flip-in].is--in {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  [data-flip-in] {
+    opacity: 1;
+  }
+
+  .line-divider {
+    transform: none;
+  }
+}
+
+/* ── Hero ────────────────────────────────────────────────────────── */
+.section-hero {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-40);
+  height: 100svh;
+  position: relative;
+}
+
+/* Clips horizontal overflow only (so trail images can't cause a horizontal
+   scrollbar) while deliberately leaving vertical overflow visible — trail
+   images spawned near the hero's edges are allowed to spill into the
+   section below rather than being cropped at the hero's own boundary. */
+.section-overflow {
+  max-width: 100vw;
+  position: relative;
+  overflow-y: visible;
+  overflow-x: clip;
+}
+
+@supports not (overflow: clip) {
+  .section-overflow {
+    overflow-x: hidden;
+  }
+}
+
+.hero_content-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.hero_content-wrap {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  gap: var(--space-24);
+  padding-bottom: var(--space-24);
+  text-align: center;
+}
+
+.hero_description-wrap {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  gap: var(--space-24);
+  width: 100%;
+  max-width: 26.5rem;
+}
+
+.hero-description-icon {
+  display: flex;
+  flex: none;
+  width: var(--space-96);
+  color: var(--accent);
+}
+
+.hero_logo {
+  display: none;
+  width: 2.25rem;
+  color: var(--accent);
+}
+
+.hero-eyebrow-text {
+  letter-spacing: -0.02em;
+  line-height: 1.28;
+  font-size: var(--text-body-md);
+  margin: 0;
+  text-wrap: balance;
+}
+
+.hero_pictures-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  max-width: 100vw;
+  height: 100%;
+}
+
+.structure-element,
+.trail-section,
+.trail-list {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.trail-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+}
+
+.trail-item {
+  position: absolute;
+  width: 25rem;
+  aspect-ratio: 10 / 7;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.trail-item__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── Video block ("I think about your website...") ─────────────── */
+.line-divider_wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.line-divider {
+  width: var(--space-1);
+  height: 14rem;
+  transform: scaleY(0.04);
+  transform-origin: top center;
+  background-image: linear-gradient(0deg, var(--accent), var(--background) 90%);
+}
+
+.video-block_content-wrap {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  gap: var(--space-24);
+}
+
+.video-block_icons-wrap {
+  width: 5.375rem;
+  perspective: 800px;
+}
+
+.video-block_text-wrap {
+  max-width: 49rem;
+  font-size: var(--space-40);
+  line-height: 1.04;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.big-text_italic {
+  font-family: var(--font-display);
+  font-style: italic;
+}
+
+.video_block-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: relative;
+}
+
+.video-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 12;
+  width: 100%;
+  max-width: 47.5625rem;
+  height: 26.6875rem;
+  overflow: clip;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  background: none;
+}
+
+.video_button {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-64);
+  aspect-ratio: 1;
+  border-radius: var(--radius-pill);
+  backdrop-filter: blur(12px);
+  background: var(--overlay-on-dark);
+  color: var(--color-white);
+  border: none;
+  cursor: pointer;
+}
+
+.video_button:hover {
+  color: var(--accent);
+}
+
+.video-button_icon {
+  display: flex;
+  width: 38%;
+}
+
+.video_bg-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: #000;
+}
+
+.video_bg-wrap img,
+.video_bg-wrap video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video_text-wrap {
+  position: absolute;
+  left: 0;
+  right: var(--space-40);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  opacity: 0.12;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--text-h1);
+  line-height: 1.1;
+}
+
+/* ── Recent projects ─────────────────────────────────────────────── */
+.project-tabs_wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-24);
+  position: relative;
+}
+
+.project-tabs_image-placeholder {
+  width: 100%;
+  max-width: 54.5rem;
+  height: 38.3125rem;
+}
+
+.project-tab_projects-wrap {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  max-width: 26.5rem;
+}
+
+.project-card {
+  padding-top: var(--space-12);
+  padding-bottom: var(--space-12);
+  border-bottom: var(--space-1) solid var(--overlay-on-dark);
+  cursor: pointer;
+}
+
+.project-card_content-wrap {
+  display: flex;
+  flex-flow: column;
+}
+
+/* Open/close via CSS grid-rows (0fr <-> 1fr) instead of a JS-measured
+   scrollHeight px value that gets swapped for `height: auto` once the
+   transition ends — that swap is where a stale/rounded measurement used to
+   show up as a visible snap. Grid-rows never needs a measurement, so there's
+   nothing to get out of sync and nothing to snap. */
+.project_category-wrap {
+  display: grid;
+  grid-template-rows: minmax(0, 0fr);
+  overflow: hidden;
+  opacity: 0;
+  transition: grid-template-rows 0.4s ease, opacity 0.3s ease;
+}
+
+.project-card.is--open .project_category-wrap {
+  grid-template-rows: minmax(0, 1fr);
+  opacity: 1;
+}
+
+.project-category {
+  justify-self: start;
+  min-height: 0;
+  overflow: hidden;
+  padding: var(--space-6) var(--space-8) var(--space-4);
+  background: var(--overlay-on-dark);
+  font-size: var(--text-body-sm);
+  margin: 0 0 var(--space-24);
+}
+
+.project_descriptions-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 0.4s ease, opacity 0.3s ease;
+}
+
+.project-card.is--open .project_descriptions-wrap {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.project_descriptions-inner {
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-flow: column;
+}
+
+.project_description-big {
+  opacity: 0.72;
+  font-size: var(--text-body-md);
+  margin: var(--space-4) 0 0;
+}
+
+.project-card_description-small {
+  font-size: var(--text-body-sm);
+  margin: var(--space-12) 0 0;
+}
+
+.project-card_hidden {
+  display: none;
+}
+
+.project-card_image-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.project-card_image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.project-image_hoverer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 var(--space-20) var(--space-20);
+  opacity: 0;
+  background-image: linear-gradient(0deg, rgba(8, 8, 7, 0.9), rgba(8, 8, 7, 0));
+  transition: opacity 0.35s;
+}
+
+.project-card_image-wrap:hover .project-image_hoverer,
+.project-card_image-wrap:focus-within .project-image_hoverer {
+  opacity: 1;
+}
+
+.project-card_link {
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+}
+
+/* ── About ("Behind the Projects") ──────────────────────────────── */
+.ihor_block-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: relative;
+}
+
+.ihor_photo-wrap {
+  position: relative;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  max-width: 40.5rem;
+  height: 42.5rem;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.ihor_photo-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ihor-photo_text {
+  position: absolute;
+  z-index: 5;
+  bottom: var(--space-12);
+  width: 12.125rem;
+  color: var(--accent);
+  display: flex;
+}
+
+.ihor_text-wrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--text-h1);
+  line-height: 1.1;
+}
+
+.ihor-text_smaller {
+  font-size: var(--space-40);
+  letter-spacing: -0.01em;
+  line-height: 0.9;
+}
+
+.ihor-block_info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 40.5rem;
+  margin: -1.875rem auto 0;
+}
+
+.icon_text--wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  text-transform: lowercase;
+}
+
+.icon-text-label {
+  font-size: var(--text-body-md);
+  margin: 0;
+}
+
+.icon-text_icon {
+  display: flex;
+  flex: none;
+  width: var(--space-36);
+}
+
+.from-word {
+  display: flex;
+  width: var(--space-40);
+  color: var(--accent);
+}
+
+.about_icon--texts {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  gap: var(--space-24);
+  width: 100%;
+  max-width: 26.5rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.about_icon--texts p {
+  text-wrap: balance;
+}
+
+.about_icon-wrap {
+  width: var(--space-80);
+}
+
+/* ── Services ────────────────────────────────────────────────────── */
+.services-section {
+  position: relative;
+  height: 101svh;
+  max-width: 100vw;
+  overflow: clip;
+}
+
+.swiper.is--services {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: clip;
+}
+
+.swiper-wrapper.is--services {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.swiper-slide.is--services {
+  width: 100%;
+  height: 100%;
+}
+
+.services-slide_content-wrap {
+  position: relative;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100%;
+  padding-bottom: 7.5rem;
+}
+
+.service_texts-wrap {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  gap: var(--space-28);
+  width: 100%;
+  text-align: center;
+}
+
+/* Number tag + heading lay out as one flex row (not the number absolutely
+   positioned against the heading's own shrink-wrapped width) so they always
+   move together — a heading-length change (or a slide switch) can't leave
+   the tag stranded at a stale offset mid-transition. */
+.service-heading {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: var(--space-12);
+}
+
+/* Targets the <h3> directly — the global `h3 { font-size: var(--text-h3) }`
+   tag rule sets the element's own font-size directly, so it wins over a
+   size merely inherited from the wrapping .service-heading div. */
+.service-heading h3 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--text-h1);
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+}
+
+.service_number-wrap {
+  flex: none;
+  padding-bottom: 0.2em;
+  font-size: var(--text-h2);
+}
+
+/* Fixed min-height (room for the longest slide's copy, ~4 lines) so every
+   slide's text block is the same height — otherwise a shorter/longer
+   description shifts the heading above it (anchored via flex-end) up or
+   down, reading as a jump when Swiper crossfades between slides. */
+.service_description {
+  width: 100%;
+  max-width: 33.5rem;
+  min-height: 5.12em;
+  font-size: var(--text-body-md);
+}
+
+.service-slide_image {
+  position: absolute;
+  inset: 0;
+}
+
+.service-slide_image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.service-slide_image-gradient {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.72) 5%, rgba(0, 0, 0, 0) 30% 60%, rgba(0, 0, 0, 0.9) 90%);
+}
+
+.services_pagination-wrap {
+  position: absolute;
+  left: 50%;
+  bottom: var(--space-28);
+  z-index: 8;
+  transform: translate(-50%);
+}
+
+.services_pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: auto;
+  padding: var(--space-6) var(--space-24);
+  border: var(--space-1) solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-pill);
+  backdrop-filter: blur(70px);
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.pagination_dot-wrap {
+  position: relative;
+  display: flex;
+  width: var(--space-24);
+  height: var(--space-24);
+  border-radius: var(--radius-pill);
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.pagination_dot-wrap::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--space-6);
+  height: var(--space-6);
+  border-radius: var(--radius-pill);
+  background: var(--color-white);
+  transform: translate(-50%, -50%);
+  transition: background 0.3s ease, width 0.3s ease;
+}
+
+.pagination_dot-wrap.pagination_dot-wrap_active::before {
+  width: var(--space-24);
+  background: var(--accent);
+}
+
+/* ── Approach (six numbered cards + shared video) ───────────────── */
+.approach_content-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 75.5rem;
+}
+
+.approach_cards-wrap {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  max-width: 40.5rem;
+}
+
+.approach-card {
+  display: flex;
+  flex-flow: column;
+  padding-top: var(--space-24);
+  padding-bottom: var(--space-24);
+  border-bottom: var(--space-1) solid var(--scrim);
+  opacity: 0.4;
+  cursor: pointer;
+  transition: opacity 0.35s;
+}
+
+.approach-card.is--open {
+  opacity: 1;
+}
+
+.approach-card_number--heading {
+  display: flex;
+  flex-flow: column;
+  gap: var(--space-12);
+}
+
+.approach-card_number {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--text-body-sm);
+  margin: 0;
+}
+
+/* Grid-rows (0fr <-> 1fr) open/close — see the matching comment on
+   .project_category-wrap for why this replaced the old JS-measured
+   scrollHeight-then-`height:auto` approach. */
+.approach-card_texts-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  margin-top: var(--space-24);
+  transition: grid-template-rows 0.4s ease;
+}
+
+.approach-card.is--open .approach-card_texts-wrap {
+  grid-template-rows: 1fr;
+}
+
+.approach-card_texts-inner {
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-flow: column;
+  gap: var(--space-12);
+}
+
+.approach-card_texts-inner p {
+  font-size: var(--text-body-sm);
+}
+
+.approach-card_texts-inner p:last-child {
+  font-size: var(--text-body-md);
+}
+
+.approach_image-placeholder {
+  width: 100%;
+  max-width: 26.5rem;
+  height: 32.5rem;
+  position: relative;
+  overflow: hidden;
+  perspective: 1000px;
+}
+
+.approach-card_hidden {
+  display: none;
+}
+
+.approach-card_image-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.approach-card_image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease-out;
+  will-change: transform;
+}
+
+/* ── Client reviews ──────────────────────────────────────────────── */
+.clients-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--space-24);
+}
+
+.client-card {
+  position: relative;
+  height: 37.5rem;
+  padding: var(--space-20);
+  color: var(--color-white);
+  overflow: hidden;
+}
+
+.client-card_info-wrap {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+}
+
+.clients-card_gradient-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0) 30% 55%, rgba(0, 0, 0, 0.88) 75%);
+}
+
+.clients-card_video-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.clients-card_video-wrap video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.client-card_logo--button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.client-card_logo {
+  display: flex;
+  flex: none;
+  width: var(--space-96);
+}
+
+.client-card_logo img {
+  width: 100%;
+  height: auto;
+}
+
+.client-card_play-button {
+  position: relative;
+}
+
+.clients-card_texts-wrap {
+  display: flex;
+  flex-flow: column;
+  gap: var(--space-12);
+}
+
+.clients-card_quote {
+  margin: 0;
+}
+
+.clients-card_person-info {
+  display: flex;
+  flex-flow: column;
+}
+
+.clients-card_person-name {
+  font-size: var(--text-body-md);
+  margin: 0;
+}
+
+.clients-card_person-description {
+  opacity: 0.72;
+  font-size: var(--text-body-sm);
+  margin: 0;
+}
+
+/* ── FAQ ─────────────────────────────────────────────────────────── */
+.faq_content-wrap {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  max-width: 54.5rem;
+  margin: 0 auto;
+}
+
+.faq_card-wrap {
+  padding-top: var(--space-24);
+  border-bottom: var(--space-1) solid var(--scrim);
+  opacity: 0.4;
+  transition: opacity 0.35s;
+}
+
+.faq_card-wrap.is--open {
+  opacity: 1;
+}
+
+/* The original reserves a fixed 24px gap between the question and the
+   divider below it via a dedicated spacer that sits outside the collapsible
+   answer — always present whether the card is open or closed. margin-bottom
+   here does the same job without an extra markup element. */
+.faq-card_title-wrap {
+  display: flex;
+  flex-flow: column;
+  gap: var(--space-12);
+  margin-bottom: var(--space-24);
+  cursor: pointer;
+}
+
+.faq-card_number {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--text-body-sm);
+  margin: 0;
+}
+
+.faq-card_description-wrap {
+  height: 0;
+  overflow: clip;
+}
+
+.faq-card_description-wrap p {
+  padding-bottom: var(--space-24);
+  margin: 0;
+}
+
+/* ── Music ───────────────────────────────────────────────────────── */
+.playlist-wrap {
+  width: 100%;
+  max-width: 41.25rem;
+  height: 29rem;
+  margin: 0 auto;
+}
+
+.playlist-wrap iframe {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+
+/* ── Legal pages (Privacy / Terms) ──────────────────────────────── */
+.legal-content {
+  width: 100%;
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+.legal-content h1 {
+  font-family: var(--font-body);
+  font-size: var(--text-h3-big);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin: 0 0 var(--space-8);
+}
+
+.legal-content_meta {
+  opacity: 0.6;
+  font-size: var(--text-body-sm);
+  margin: 0 0 var(--space-48);
+}
+
+.legal-content h2 {
+  font-family: var(--font-body);
+  font-size: var(--text-h4);
+  line-height: 1.3;
+  letter-spacing: normal;
+  margin: var(--space-48) 0 var(--space-16);
+}
+
+.legal-content h3 {
+  font-family: var(--font-body);
+  font-size: var(--text-body-lg);
+  line-height: 1.3;
+  letter-spacing: normal;
+  margin: var(--space-32) 0 var(--space-12);
+}
+
+.legal-content p {
+  font-size: var(--text-body-md);
+  line-height: 1.6;
+  margin: 0 0 var(--space-16);
+}
+
+.legal-content ul {
+  display: flex;
+  flex-flow: column;
+  gap: var(--space-8);
+  margin: 0 0 var(--space-16);
+  padding-left: var(--space-24);
+}
+
+.legal-content li {
+  font-size: var(--text-body-md);
+  line-height: 1.6;
+}
+
+.legal-content a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  text-underline-offset: 0.15em;
+}
+
+.legal-content a:hover,
+.legal-content a:focus-visible {
+  text-decoration-color: var(--accent);
+}
+
+/* ── Responsive (breakpoints match the source: 991 / 767 / 479) ──── */
+@media (max-width: 991px) {
+  .menu-wrap {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .menu-wrap > .menu-card:first-child {
+    grid-column: span 1;
+  }
+
+  .progressive-blur_wrap {
+    height: 4.5rem;
+  }
+
+  .hero_pictures-wrap {
+    display: none;
+  }
+
+  .hero_content-wrap {
+    text-align: left;
+  }
+
+  .video_text-wrap {
+    display: none;
+  }
+
+  .section-black.is--projects {
+    height: auto;
+  }
+
+  .project-tabs_wrap {
+    flex-flow: column;
+  }
+
+  .project-tab_projects-wrap {
+    max-width: none;
+  }
+
+  .approach_image-placeholder {
+    display: none;
+  }
+
+  .clients-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  .video-popup_dialog {
+    width: 100vw;
+    border-radius: 0;
+  }
+
+  .video-popup_controls {
+    padding: 32px 12px 12px;
+    gap: 10px;
+  }
+
+  .video-popup_progress {
+    left: 12px;
+    right: 12px;
+  }
+
+  .video-popup_volume-slider {
+    display: none;
+  }
+
+  .video-popup_time {
+    font-size: 12px;
+  }
+
+  .project-tabs_image-placeholder {
+    height: 30rem;
+  }
+}
+
+@media (max-width: 479px) {
+  .header-logo {
+    display: none;
+  }
+
+  .menu-wrap {
+    grid-template-columns: 1fr;
+  }
+
+  .h-big-heading {
+    line-height: 1.2;
+  }
+
+  .section-hero {
+    height: auto;
+    padding-top: var(--space-160);
+  }
+
+  .hero_logo {
+    display: flex;
+    margin-top: -0.5rem;
+  }
+
+  .video-block_text-wrap {
+    max-width: none;
+    font-size: var(--text-h2);
+  }
+
+  .video-wrap {
+    aspect-ratio: 16 / 9;
+    max-width: none;
+    height: auto;
+  }
+
+  .project-tabs_image-placeholder {
+    height: 20rem;
+  }
+
+  .ihor_photo-wrap {
+    height: 26rem;
+  }
+
+  .service_texts-wrap {
+    padding-left: var(--space-20);
+    padding-right: var(--space-20);
+  }
+
+  .playlist-wrap {
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+    justify-content: center;
+    width: 20rem;
+    max-width: none;
+    height: 31rem;
+  }
+
+  .footer_socials-wrap {
+    gap: 1.5rem;
+  }
+}
