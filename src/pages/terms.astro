@@ -1,70 +1,9 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Legal from '../components/sections/Legal.astro';
+import { terms } from '../data/legal';
+import { site } from '../data/site';
 ---
-
-<Layout title="Terms and Conditions — ihor.me" description="The terms and conditions governing your use of ihor.me.">
-  <section class="legal-section">
-    <div class="u---spacer is--full"></div>
-    <div class="container">
-      <div class="legal-content" data-reveal>
-        <h1>Terms and Conditions</h1>
-        <p class="legal-content_meta"><strong>Last Updated:</strong> February 15, 2026</p>
-
-        <h2>1. Introduction</h2>
-        <p>Welcome to <strong>ihor.me</strong> (the "Website"). These Terms and Conditions ("Terms") govern your use of the Website operated by <strong>PE Ihor Ivanchenko</strong> ("I," "me," or "my").</p>
-        <p>By accessing or using the Website, you agree to be bound by these Terms. If you disagree with any part of the terms, you may not access the Website.</p>
-
-        <h2>2. Intellectual Property Rights</h2>
-        <p>The Website and its original content, features, and functionality are and will remain the exclusive property of <strong>PE Ihor Ivanchenko</strong>.</p>
-        <ul>
-          <li><strong>Copyright:</strong> All content, including text, graphics, logos, images, and software (including the Webflow code structure), is the property of PE Ihor Ivanchenko or used with permission and is protected by international copyright laws.</li>
-          <li><strong>Restrictions:</strong> You may not reproduce, distribute, modify, create derivative works of, publicly display, publicly perform, republish, download, store, or transmit any of the material on our Website, except as incidental to normal web browsing.</li>
-        </ul>
-        <p><strong>Note for Developers:</strong> Unless explicitly marked as a "Cloneable" resource on Webflow, the source code and design system of this Website are proprietary. Copying the class naming convention or layout structure for commercial use is prohibited without my prior written consent.</p>
-
-        <h2>3. Use of the Website</h2>
-        <p>You agree to use the Website only for lawful purposes and in a way that does not infringe the rights of, restrict, or inhibit anyone else's use and enjoyment of the Website.</p>
-        <p>You agree not to:</p>
-        <ul>
-          <li>Use the contact form to send unsolicited commercial communications (spam).</li>
-          <li>Attempt to gain unauthorized access to the Website's backend or Webflow project settings.</li>
-          <li>Use any automated data mining or extraction tools on the Website.</li>
-        </ul>
-
-        <h2>4. Third-Party Links and Tools</h2>
-        <p>My Website may contain links to third-party websites or services that are not owned or controlled by me, specifically:</p>
-        <ul>
-          <li><strong>Cal.com:</strong> Used for scheduling meetings.</li>
-          <li><strong>Webflow:</strong> The hosting provider.</li>
-        </ul>
-        <p>I have no control over and assume no responsibility for the content, privacy policies, or practices of any third-party websites or services. You acknowledge and agree that PE Ihor Ivanchenko shall not be responsible or liable, directly or indirectly, for any damage or loss caused by or in connection with the use of any such content, goods, or services available on or through any such websites.</p>
-
-        <h2>5. No Professional Advice or Binding Contract</h2>
-        <p>The information provided on this Website regarding web design and development services is for general informational purposes only.</p>
-        <ul>
-          <li><strong>Booking a Call:</strong> Submitting a form or scheduling a call via Cal.com <strong>does not</strong> create a binding service contract or a client-vendor relationship.</li>
-          <li><strong>Service Agreement:</strong> A formal working relationship is only established upon the signing of a separate Service Agreement or Proposal.</li>
-        </ul>
-
-        <h2>6. Limitation of Liability</h2>
-        <p>In no event shall PE Ihor Ivanchenko, nor my partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from your access to or use of or inability to access or use the Website.</p>
-
-        <h2>7. Governing Law</h2>
-        <p>These Terms shall be governed and construed in accordance with the laws of <strong>Ukraine</strong>, without regard to its conflict of law provisions.</p>
-        <p>Any disputes arising out of or in connection with these Terms shall be subject to the exclusive jurisdiction of the courts of Ukraine.</p>
-
-        <h2>8. Changes to These Terms</h2>
-        <p>I reserve the right, at my sole discretion, to modify or replace these Terms at any time. By continuing to access or use the Website after those revisions become effective, you agree to be bound by the revised terms.</p>
-
-        <h2>9. Contact Me</h2>
-        <p>If you have any questions about these Terms, please contact me:</p>
-        <p><strong>PE Ihor Ivanchenko</strong></p>
-        <p><strong>Email:</strong> <a href="mailto:hello@ihor.me">hello@ihor.me</a></p>
-        <p><strong>Website:</strong> <a href="https://ihor.me" target="_blank" rel="noopener">https://ihor.me</a></p>
-      </div>
-    </div>
-    <div class="u---spacer"></div>
-  </section>
-</Layout>
-
-<script is:inline src="/scripts/site.js"></script>
+<BaseLayout title={`${terms.name} — ${site.name}`} description={terms.description} breadcrumb={terms.name} modified={terms.updatedIso}>
+  <Legal doc={terms} />
+</BaseLayout>

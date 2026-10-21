@@ -1,0 +1,22 @@
+---
+/**
+ * Pill button with the rolling label and a trailing icon.
+ * variant: p = dark fill, s = outline, l = white fill.
+ */
+interface Props {
+  href: string;
+  label: string;
+  variant?: 'p' | 's' | 'l';
+  size?: 'md' | 'sm';
+  icon?: 'star' | 'down';
+  external?: boolean;
+  class?: string;
+  style?: string;
+}
+const { href, label, variant = 'p', size = 'md', icon = 'star', external = false, class: cls = '', style } = Astro.props;
+const classes = ['pill', `pill-${variant}`, size === 'sm' && 'pill-sm', cls].filter(Boolean).join(' ');
+---
+<a class={classes} href={href} style={style} {...(external ? { target: '_blank', rel: 'noopener' } : {})}>
+  <span class="roll"><span data-t={label}>{label}</span></span>
+  {icon === 'down' ? <span class="arw" aria-hidden="true">↓</span> : <span class="st" aria-hidden="true">✦</span>}
+</a>

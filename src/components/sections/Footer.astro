@@ -1,0 +1,42 @@
+---
+import '../../styles/sections/footer.css';
+import Icon from '../ui/Icon.astro';
+import { site } from '../../data/site';
+import { messengers, socials, askAi } from '../../data/social';
+const year = new Date().getFullYear();
+const letters = [
+  { ch: 'i', w: 200 },
+  { ch: 'h', w: 430 },
+  { ch: 'o', w: 660 },
+  { ch: 'r', w: 900 },
+];
+---
+<footer class="ft">
+  <div class="ft-top g12">
+    <div class="ft-id">
+      <p class="ft-nm">{site.name}</p>
+      <p class="ft-bio">I plan, design and build every site myself, from the first call to launch day.</p>
+      <p class="ft-loc">{site.location} <span class="ft-sep" aria-hidden="true">·</span> <span class="ft-clock" data-tz={site.timeZone}>--:--</span> local time</p>
+    </div>
+    <div class="ft-g ft-g1">
+      <span class="ft-l">Write to me</span>
+      <a class="ft-mail" href={`mailto:${site.email}`}>{site.email}</a>
+      <div class="ft-msg">{messengers.map((m) => <a href={m.href} target="_blank" rel="noopener"><Icon name={m.icon} />{m.name}</a>)}</div>
+    </div>
+    <div class="ft-g ft-g2">
+      <span class="ft-l">Follow</span>
+      <div class="ft-soc">{socials.map((s) => <a href={s.href} target="_blank" rel="noopener" aria-label={s.name}><Icon name={s.icon} size={18} /></a>)}</div>
+      <span class="ft-l ft-l2">Ask AI about me</span>
+      <div class="ft-ai">{askAi.map((a) => <a href={a.href} target="_blank" rel="noopener"><Icon name={a.icon} size={14} />{a.name}</a>)}</div>
+    </div>
+  </div>
+  <div class="ft-bot"><span>© {year} {site.name}</span><a href="/privacy/">Privacy policy</a><a href="/terms/">Terms</a></div>
+  <div class="ft-wm" aria-hidden="true"><p class="ft-w"><span class="wl">{letters.map((l) => <span data-w0={l.w}>{l.ch}</span>)}</span></p></div>
+</footer>
+
+<script>
+  import { initClock } from '../../scripts/clock';
+  import { initWordmark } from '../../scripts/wordmark';
+  initClock();
+  initWordmark();
+</script>

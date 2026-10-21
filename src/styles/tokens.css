@@ -1,0 +1,30 @@
+/*
+  Design tokens.
+  --p is the layout unit: 1px at the 1440px design width, scaled with the viewport.
+  Full-screen sections (.hero, .xp, .fit) also cap it by height so they always fit one screen.
+  Below 1024px the unit is a plain 1px and layouts switch to their tablet/mobile rules.
+*/
+@font-face{font-family:'Mariupol';src:url('/fonts/mariupol-regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Nyght Serif';src:url('/fonts/nyght-serif-italic.woff2') format('woff2');font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:'Alpino';src:url('/fonts/alpino-variable.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
+
+:root{
+  --white:#fff;
+  --green:#142019;
+  --sage:#b4c3b8;
+  --red:#a3161f;
+  --red-bright:#f2474f;
+  --black:#0f110f;
+  --black-deep:#0b0d0b;
+  --font-sans:'Mariupol','Helvetica Neue',Arial,sans-serif;
+  --font-serif:'Nyght Serif',Georgia,serif;
+  --p:calc(100vw / 1440);
+}
+.hero,.xp,.fit{--p:min(calc(100vw / 1440), calc(100svh / 900))}
+
+@media (max-width:1023px){
+  :root,.hero,.xp,.fit{--p:1px}
+}
+
+@property --cv{syntax:'<length>';inherits:false;initial-value:0px}
+@property --xc{syntax:'<color>';inherits:true;initial-value:#142019}

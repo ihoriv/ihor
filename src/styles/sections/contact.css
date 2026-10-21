@@ -1,0 +1,51 @@
+.bk-g{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);background-size:calc(40 * var(--p)) calc(40 * var(--p));background-position:center center;-webkit-mask-image:radial-gradient(ellipse 70% 80% at 50% 45%,#000 20%,transparent 85%);mask-image:radial-gradient(ellipse 70% 80% at 50% 45%,#000 20%,transparent 85%)}
+.bk-c{position:absolute;width:calc(12 * var(--p));height:calc(12 * var(--p));z-index:1}
+.bk-c::before,.bk-c::after{content:"";position:absolute;background:rgba(255,255,255,.45)}
+.bk-c::before{left:50%;top:0;bottom:0;width:1px}
+.bk-c::after{top:50%;left:0;right:0;height:1px}
+.bk-c1{left:calc(24 * var(--p));top:calc(24 * var(--p))}
+.bk-c2{right:calc(24 * var(--p));top:calc(24 * var(--p))}
+.bk-c3{left:calc(24 * var(--p));bottom:calc(24 * var(--p))}
+.bk-c4{right:calc(24 * var(--p));bottom:calc(24 * var(--p))}
+.ct{position:relative;overflow:clip;background:var(--black);color:var(--white);padding:calc(120 * var(--p)) calc(40 * var(--p)) 0}
+.ct-c{display:flex;flex-direction:column;align-items:center;text-align:center}
+.ct-h{margin:calc(24 * var(--p)) 0 0;font-size:calc(80 * var(--p));line-height:calc(68 * var(--p));font-weight:400;letter-spacing:-0.055em}
+.ct-l{display:block;overflow:hidden;padding:0 .06em .12em;margin-bottom:-.12em}
+.ct-l>span{display:inline-block;animation:ctl linear both;animation-timeline:view();animation-range:entry 20% cover 45%}
+.ct-l+.ct-l>span{animation-range:entry 35% cover 52%}
+.ct-h .ser{color:var(--red-bright);font-size:1.06em;letter-spacing:-0.025em}
+@keyframes ctl{from{transform:translateY(105%)}to{transform:none}}
+.ct-bk{position:relative;overflow:hidden;width:100%;max-width:calc(904 * var(--p));box-sizing:border-box;margin-top:calc(64 * var(--p));display:flex;align-items:center;justify-content:space-between;gap:calc(32 * var(--p));padding:calc(32 * var(--p)) calc(32 * var(--p)) calc(32 * var(--p)) calc(40 * var(--p));border-radius:calc(24 * var(--p));background:var(--black);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);text-align:left}
+.ct-bk>*:not(.bk-g):not(.bk-c){position:relative;z-index:2}
+.ct-bk .bk-g{-webkit-mask-image:radial-gradient(ellipse 60% 120% at 50% 50%,#000 10%,transparent 80%);mask-image:radial-gradient(ellipse 60% 120% at 50% 50%,#000 10%,transparent 80%)}
+.ct-bk .bk-c1,.ct-bk .bk-c2{top:calc(12 * var(--p))}
+.ct-bk .bk-c3,.ct-bk .bk-c4{bottom:calc(12 * var(--p))}
+.ct-bk .bk-c1,.ct-bk .bk-c3{left:calc(12 * var(--p))}
+.ct-bk .bk-c2,.ct-bk .bk-c4{right:calc(12 * var(--p))}
+.ct-who{display:flex;align-items:center;gap:calc(24 * var(--p))}
+.ct-who img{width:calc(80 * var(--p));height:calc(80 * var(--p));border-radius:50%;object-fit:cover;box-shadow:0 0 0 calc(4 * var(--p)) var(--black),0 0 0 calc(5 * var(--p)) rgba(255,255,255,.22)}
+.ct-who>span{display:flex;flex-direction:column}
+.ct-k{font-size:calc(12 * var(--p));line-height:calc(16 * var(--p));text-transform:uppercase;letter-spacing:.04em;color:rgba(255,255,255,.7);margin-bottom:calc(8 * var(--p))}
+.ct-who b{font-weight:400;font-size:calc(24 * var(--p));line-height:calc(30 * var(--p));letter-spacing:-0.02em}
+.ct .ct-go{height:calc(72 * var(--p));padding:0 calc(40 * var(--p));font-size:calc(18 * var(--p));gap:calc(12 * var(--p))}
+.ct-m{margin:calc(32 * var(--p)) 0 0;font-size:calc(16 * var(--p));line-height:calc(24 * var(--p));color:rgba(255,255,255,.7)}
+.ct-m a{color:var(--white);background:linear-gradient(currentColor,currentColor) 0 100%/100% 1px no-repeat;transition:background-size .4s}
+.ct-m a:hover{background-size:0 1px;background-position:100% 100%}
+@media (prefers-reduced-motion:reduce){
+.ct-l>span{animation:none}
+}
+@media (max-width:1023px){
+.ct{padding:96px 16px 32px}
+.ct-h{font-size:48px;line-height:46px}
+.ct-bk{flex-direction:column;align-items:stretch;padding:24px;margin-top:48px}
+.ct-who img{width:64px;height:64px}
+.ct .ct-go{justify-content:center;height:56px}
+}
+.ct .ov{color:rgba(255,255,255,.7)}
+@media (max-width:1023px){
+.ct-h{font-size:56px!important;line-height:52px!important}
+}
+@media (max-width:767px){
+.ct{padding-left:20px!important;padding-right:20px!important}
+.ct-h{font-size:40px!important;line-height:38px!important}
+}

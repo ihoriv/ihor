@@ -1,0 +1,38 @@
+---
+import '../../styles/sections/belief.css';
+import { Image } from 'astro:assets';
+import Label from '../ui/Label.astro';
+import { reviews } from '../../data/reviews';
+
+/* Each word is wrapped so it can slide up line by line when the block scrolls into view. */
+const lead = 'Strong companies deserve a website as credible as the work they do. Most clients I work with have built something serious, but their site still looks like the early version of the business.';
+const follow = 'That gap costs more than leads. It costs the trust you’ve already earned,';
+const accent = 'before anyone reads the proposal.';
+const words = (t: string) => t.split(' ');
+---
+<section class="bl2" aria-label="What I believe">
+  <div class="in">
+    <div class="g12 bl4-top">
+      <div class="bl4-side"><Label text="What I believe" /></div>
+      <div class="bl2-t">
+        <p class="bl4-p1">{words(lead).map((w) => <><span class="w"><span>{w}</span></span> </>)}</p>
+        <p class="bl3-p2">{words(follow).map((w) => <><span class="w"><span>{w}</span></span> </>)}{words(accent).map((w) => <><span class="w r ser"><span>{w}</span></span> </>)}</p>
+        <div class="rv-row">
+          {reviews.map((r, i) => (
+            <figure class="rv" style={`--k:${i}`}>
+              <span class="rv-q ser" aria-hidden="true">“</span>
+              <blockquote>{r.quote}</blockquote>
+              <figcaption><Image src={r.photo} alt="" width={80} height={80} /><span><b>{r.name}</b><span>{r.role}</span></span></figcaption>
+              <a class="rv-l" href={r.url} target="_blank" rel="noopener">{r.domain}</a>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initBelief } from '../../scripts/belief';
+  initBelief();
+</script>

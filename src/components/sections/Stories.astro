@@ -1,0 +1,57 @@
+---
+import '../../styles/sections/stories.css';
+import { Image } from 'astro:assets';
+import Button from '../ui/Button.astro';
+import Label from '../ui/Label.astro';
+import { stories } from '../../data/stories';
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+<section class="cs" aria-label="Client stories">
+  <div style="position:relative;z-index:1">
+    <div class="g12" style="align-items:end;padding:0 calc(40 * var(--p));margin-bottom:calc(64 * var(--p))">
+      <div class="cs-hd" style="grid-column:1/span 10;display:flex;flex-direction:column;gap:calc(24 * var(--p))">
+        <Label text="Real client stories" />
+        <h2 style="margin:0;font-size:calc(80 * var(--p));line-height:calc(68 * var(--p));font-weight:400;letter-spacing:-0.045em">The clients say it <span class="ser" style="color:var(--red);font-size:1.06em">better than I can.</span></h2>
+      </div>
+    </div>
+    <div class="cv-list">
+      {stories.map((s, i) => (
+        <article class="cv g12" style={`--i:${i}`}>
+          <div class="cv-v">
+            <video muted loop playsinline preload="metadata" poster={s.poster.src} src={s.video}></video>
+            <button class="cv-o" type="button" aria-label={`Play video review from ${s.author} with sound`}>
+              <span class="cv-top">
+                <Image class="cv-lg" src={s.logo} alt={s.logoAlt} height={48} />
+                <span class="cv-snd">
+                  <svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 7.5h3l4-3.5v12l-4-3.5H3z" fill="currentColor"></path><path d="M13 7c1 .8 1.5 1.8 1.5 3s-.5 2.2-1.5 3M15.5 4.5C17.2 6 18 7.9 18 10s-.8 4-2.5 5.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg>
+                  Play with sound
+                </span>
+              </span>
+              <span class="cv-qt">
+                <q>“{s.quote}”</q>
+                <span class="cv-au"><b>{s.author}</b><span>{s.role}</span></span>
+              </span>
+            </button>
+          </div>
+          <div class="cv-b">
+            <div class="cv-hd"><span class="ov">({pad(i + 1)}) Case</span><span class="ov">{s.industry}</span></div>
+            <h3 class="cv-n">{s.client}</h3>
+            <p class="cv-d">{s.description}</p>
+            <dl class="cv-st">
+              {s.stats.map((st) => <div><dt>{st.label}</dt><dd>{st.value}<i>{st.unit}</i></dd></div>)}
+            </dl>
+            <div class="cv-ft">
+              <span class="cv-sc">{s.services}</span>
+              <Button href={s.url} label="Visit the site" size="sm" external style="height:calc(40 * var(--p));padding:0 calc(16 * var(--p));font-size:calc(14 * var(--p));gap:calc(8 * var(--p))" />
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initStories } from '../../scripts/stories';
+  initStories();
+</script>

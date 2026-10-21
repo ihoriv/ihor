@@ -1,45 +1,73 @@
-# Astro HTML + CSS Starter
+# ihor.me
 
-A fast, no-framework [Astro](https://astro.build) starter styled with plain,
-class-based CSS — **no Tailwind, no UI framework**. It's the ideal canvas for
-editing styles visually inside Ship Studio.
+Personal site of Ihor Ivanchenko, built with [Astro](https://astro.build) as a fully static site and deployed on Cloudflare.
 
-## Why this starter
+## Commands
 
-Most starters reach for a utility-CSS framework. This one keeps styling in a
-single, readable stylesheet where **every element has one semantic class and
-each class is defined by exactly one CSS rule**. That makes the markup clean and
-makes styles easy to edit — by hand or by clicking elements in Ship Studio's
-visual editor, which writes real CSS (`padding: 24px`, any property, any value)
-straight into the stylesheet.
+| Command           | What it does                                   |
+| ----------------- | ---------------------------------------------- |
+| `npm install`     | Install dependencies                           |
+| `npm run dev`     | Local dev server at `localhost:4321`           |
+| `npm run build`   | Production build into `dist/`                  |
+| `npm run preview` | Serve the production build locally             |
+| `npm run check`   | Type-check `.astro` and `.ts` files            |
+
+## Cloudflare
+
+Cloudflare builds the site from this repo on every push.
+
+- Build command: `npm run build`
+- Output directory: `dist`
+- Node version: 20 or newer (set `NODE_VERSION=20` if the project uses an older default)
+
+`public/_headers` sets long cache lifetimes for fonts, hashed build assets and media.
 
 ## Structure
 
 ```
 src/
-  layouts/Layout.astro      Shared <html> shell (fonts, header, footer)
-  components/               Header, Footer — reusable markup
-  pages/                    index.astro, about.astro (one file per route)
-  styles/main.css           The authored stylesheet — one rule per class
-public/                     Static assets (favicon)
+  pages/index.astro          The homepage: composes the sections in order
+  pages/privacy.astro        Privacy policy  } both rendered by components/sections/Legal.astro
+  pages/terms.astro          Terms           } from the copy in data/legal.ts
+  layouts/BaseLayout.astro   <head>, SEO meta, JSON-LD (Person + FAQPage), global styles
+  components/
+    sections/                One component per homepage section
+    ui/                      Shared pieces: Button (pill), Icon, Label
+  data/                      All copy and lists: projects, stories, services, reviews, FAQ, socials
+  scripts/                   Small client scripts, one per interactive feature
+  styles/
+    tokens.css               Colours, fonts and the --p layout unit
+    base.css                 Base elements, buttons, labels, grid
+    sections/*.css           Styles for each section, imported by that section's component
+  assets/                    Images processed by Astro (resized, converted to WebP)
+public/
+  fonts/                     Mariupol, Nyght Serif Italic, Alpino (variable)
+  media/                     Service and client-story videos
 ```
 
-## The styling convention
+### Editing content
 
-Keep these and the visual editor stays reliable:
+Copy lives in `src/data/`. To add a project, add an image to `src/assets/work/` and an entry to `src/data/projects.ts`; `featured: true` puts it in the large stacked list, otherwise it goes into the two-column grid. FAQ, reviews, client stories and social links work the same way.
 
-- Style through **classes**, not inline `style=""`.
-- Give each editable element **one semantic class** (`.hero-title`, `.feature-card`).
-- Define each class with **one rule** in `src/styles/main.css`.
-- Put responsive overrides in the **`@media` block** at the bottom of the file.
+### Design system
 
-## Commands
+- Colours: `--white`, `--green`, `--sage`, `--red`, `--red-bright` (red used on dark backgrounds, for WCAG AA contrast), `--black`.
+- Type: Mariupol for text, Nyght Serif Italic for accents, Alpino variable for the footer wordmark.
+- `--p` is the layout unit: 1px at the 1440px design width, scaled with the viewport. Full-screen sections also cap it by height. Below 1024px it becomes a plain `1px` and the tablet/mobile rules take over.
 
-| Command           | Action                                       |
-| ----------------- | -------------------------------------------- |
-| `npm install`     | Install dependencies                         |
-| `npm run dev`     | Start the dev server at `localhost:4321`     |
-| `npm run build`   | Build the production site to `./dist/`       |
-| `npm run preview` | Preview the build locally                    |
+### Interactivity
 
-Built for [Ship Studio](https://github.com/ship-studio/ship-studio).
+There is no UI framework: each interactive feature is a small TypeScript module in `src/scripts/`, loaded by the component that needs it (Astro bundles and defers them).
+
+| Script          | Feature                                                                 |
+| --------------- | ----------------------------------------------------------------------- |
+| `hero-band.ts`  | WebGL curved band of project cards in the hero (drag, scroll-reactive), plus the page-load intro |
+| `case-hover.ts` | WebGL smear on project images on hover (desktop only)                   |
+| `stories.ts`    | Background video playback, play with sound, stacking cards              |
+| `belief.ts`     | Line-by-line word reveal                                                |
+| `faq.ts`        | One-at-a-time accordion                                                 |
+| `clock.ts`      | Live Kharkiv time in the footer                                         |
+| `wordmark.ts`   | Footer wordmark weight following the cursor                             |
+| `legal-toc.ts`  | Highlights the current section in the legal pages' contents list        |
+
+The services and process sections are animated with CSS scroll-driven animations (`animation-timeline`), so they need no JavaScript.

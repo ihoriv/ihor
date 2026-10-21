@@ -1,0 +1,33 @@
+---
+import '../../styles/sections/services.css';
+import Button from '../ui/Button.astro';
+import { services, serviceWords } from '../../data/services';
+import { site } from '../../data/site';
+
+/* The scroll choreography lives in services.css as keyframes named per panel (xp1..3) and per element (xe00..xe33, xi0..3, xz0..3). */
+const themeClass = { light: '', red: 'xd xr', dark: 'xd xg' } as const;
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+<section id="services" class="xp" aria-label="Services">
+  <div class="xp-s">
+    {services.map((s, i) => (
+      <div class:list={['xp-p', i > 0 && 'xa', themeClass[s.theme]]} style={`background:${s.bg};${i > 0 ? `animation-name:xp${i}` : ''}`}>
+        {i > 0 && <span class="xp-v xa" style={`animation-name:xv${i}`} aria-hidden="true"><b>{pad(i + 1)}</b>{s.title}</span>}
+        <div class="xp-c">
+          <h3 class="xp-h xa" style={`animation-name:xe${i}0`}>{s.title}</h3>
+          <ul class="xp-tags xa" style={`animation-name:xe${i}1`}>{s.tags.map((t) => <li>{t}</li>)}</ul>
+          <p class="xp-d xa" style={`animation-name:xe${i}2`}>{s.text}</p>
+          <div class="xa" style={`animation-name:xe${i}3`}><Button href={site.booking} label="discuss your project" variant="s" style="margin-top:calc(40 * var(--p))" /></div>
+        </div>
+        <div class="xp-i xa" style={`animation-name:xi${i}`}><video class="xa" src={s.video} autoplay muted loop playsinline preload="metadata" aria-hidden="true" style={`animation-name:xz${i}`}></video></div>
+      </div>
+    ))}
+    <div class="xp-hd" style="position:absolute;left:calc(156 * var(--p));top:calc(104 * var(--p));z-index:6;pointer-events:none;display:flex;flex-direction:column;gap:calc(16 * var(--p))">
+      <h2 aria-label="One specialist for your strategy, design, code and visibility." style="margin:0;font-size:calc(80 * var(--p));line-height:calc(68 * var(--p));font-weight:400;letter-spacing:-0.05em;width:calc(900 * var(--p));color:var(--xc)">One specialist for<span class="xp-rot" aria-hidden="true">{serviceWords.map((w, i) => <span class="xa" style={`animation-name:xw${i}${w.color ? `;color:${w.color}` : ''}`}>{w.text}</span>)}</span></h2>
+    </div>
+    <div class="xp-nav xa" style="animation-name:xnr">
+      {services.map((s, i) => <div><span class="xa" style={`animation-name:xn${i}`}>{pad(i + 1)}</span><span class="xa" style={`animation-name:xl${i}`}>{s.title}</span></div>)}
+      <span class="xp-track"></span><span class="xp-bar xa" style="animation-name:xbar"></span>
+    </div>
+  </div>
+</section>

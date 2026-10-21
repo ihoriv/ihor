@@ -1,0 +1,117 @@
+.lg-top{padding:0 calc(40 * var(--p))}
+.lg{padding:0 calc(40 * var(--p)) calc(160 * var(--p));color:var(--green)}
+
+/* Title */
+.lg-hd{display:flex;flex-direction:column;align-items:flex-start;gap:calc(32 * var(--p));padding:calc(136 * var(--p)) 0 calc(56 * var(--p));border-bottom:1px solid rgba(20,32,25,.14)}
+.lg-t{margin:0;display:flex;flex-direction:column;font-weight:400}
+/*
+  Each line is a mask for the rise animation. The glyphs are bigger than the line box
+  (descenders, the italic overhang on the left, the tail of the "y"), so the mask gets room
+  on every side, cancelled by negative margins so the layout stays the same.
+  The lines then start lower so the larger mask still hides them fully.
+*/
+.lg-l{display:block;overflow:hidden;font-size:calc(136 * var(--p));line-height:calc(116 * var(--p));letter-spacing:-0.055em;padding:0 .14em .24em;margin:0 -.14em -.24em}
+.lg-l>span{--rise-from:150%;white-space:nowrap}
+.lg-l2{font-size:calc(144 * var(--p));line-height:calc(120 * var(--p));letter-spacing:-0.025em;color:var(--red);padding:0 .18em .28em;margin:0 -.18em -.28em}
+.lg-l2>span{--rise-from:190%}
+.lg-meta{width:100%;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:calc(24 * var(--p));align-items:end;margin-top:calc(48 * var(--p))}
+.lg-meta p{margin:0;display:flex;flex-direction:column;gap:calc(6 * var(--p));font-size:calc(16 * var(--p));line-height:calc(24 * var(--p))}
+.lg-meta p:nth-child(1){grid-column:1/span 3}
+.lg-meta p:nth-child(2){grid-column:4/span 3}
+.lg-sw{grid-column:7/span 6;justify-self:end;display:flex;gap:calc(8 * var(--p))}
+.lg-sw a{display:inline-flex;align-items:center;height:calc(40 * var(--p));padding:0 calc(16 * var(--p));border-radius:calc(999 * var(--p));box-shadow:inset 0 0 0 1px rgba(20,32,25,.2);font-size:calc(14 * var(--p));line-height:calc(20 * var(--p));transition:background-color .4s,color .4s,box-shadow .4s}
+.lg-sw a:hover{box-shadow:inset 0 0 0 1px var(--green)}
+.lg-sw a[aria-current]{background:var(--green);color:var(--white);box-shadow:inset 0 0 0 1px var(--green)}
+
+/* Body: sticky contents + document */
+.lg-body{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:calc(24 * var(--p));align-items:start;padding-top:calc(64 * var(--p))}
+.lg-toc{grid-column:1/span 3;position:sticky;top:calc(40 * var(--p));display:flex;flex-direction:column;gap:calc(20 * var(--p))}
+.lg-toc ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.lg-toc a{display:flex;gap:calc(12 * var(--p));padding:calc(7 * var(--p)) 0;font-size:calc(15 * var(--p));line-height:calc(20 * var(--p));color:rgba(20,32,25,.72);transition:color .3s,transform .5s cubic-bezier(.2,.8,.2,1)}
+.lg-toc a .ser{flex:none;width:calc(22 * var(--p));font-size:calc(16 * var(--p));color:rgba(20,32,25,.66);transition:color .3s}
+.lg-toc a:hover{color:var(--green)}
+.lg-toc a[aria-current]{color:var(--green);transform:translateX(calc(6 * var(--p)))}
+.lg-toc a[aria-current] .ser{color:var(--red)}
+
+.lg-doc{grid-column:5/span 8}
+.lg-s{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));column-gap:calc(24 * var(--p));padding:calc(40 * var(--p)) 0 calc(48 * var(--p));border-top:1px solid rgba(20,32,25,.14);scroll-margin-top:calc(24 * var(--p))}
+.lg-s:first-child{border-top:0;padding-top:0}
+.lg-sh{grid-column:1/span 8;display:flex;align-items:baseline;gap:calc(20 * var(--p));margin-bottom:calc(24 * var(--p))}
+.lg-n{flex:none;width:calc(40 * var(--p));font-size:calc(28 * var(--p));line-height:calc(36 * var(--p));color:var(--red)}
+.lg-sh h2{margin:0;font-size:calc(36 * var(--p));line-height:calc(40 * var(--p));font-weight:400;letter-spacing:-0.035em}
+.lg-sb{grid-column:1/span 7;padding-left:calc(60 * var(--p));display:flex;flex-direction:column;gap:calc(16 * var(--p));font-size:calc(18 * var(--p));line-height:calc(28 * var(--p));color:rgba(20,32,25,.78)}
+.lg-sb p{margin:0;max-width:calc(680 * var(--p))}
+.lg-sb a{color:var(--green);background:linear-gradient(currentColor,currentColor) 0 100%/100% 1px no-repeat;transition:color .3s}
+.lg-sb a:hover{color:var(--red)}
+.lg-sb h3{margin:calc(16 * var(--p)) 0 0;font-size:calc(22 * var(--p));line-height:calc(28 * var(--p));font-weight:400;letter-spacing:-0.02em;color:var(--green)}
+
+.lg-ls{list-style:none;margin:calc(4 * var(--p)) 0;padding:0;display:flex;flex-direction:column;max-width:calc(680 * var(--p))}
+.lg-ls li{position:relative;padding:calc(14 * var(--p)) 0 calc(14 * var(--p)) calc(28 * var(--p));border-top:1px solid rgba(20,32,25,.1)}
+.lg-ls li:last-child{border-bottom:1px solid rgba(20,32,25,.1)}
+.lg-ls li::before{content:"✱";position:absolute;left:0;top:calc(14 * var(--p));color:var(--red);font-size:calc(14 * var(--p));line-height:calc(28 * var(--p))}
+.lg-ls-t li{display:grid;grid-template-columns:calc(210 * var(--p)) minmax(0,1fr);column-gap:calc(24 * var(--p))}
+.lg-ls b{font-weight:400;color:var(--green)}
+
+.lg-note{margin:calc(8 * var(--p)) 0 0;max-width:calc(680 * var(--p));box-sizing:border-box;padding:calc(24 * var(--p)) calc(28 * var(--p));border-radius:calc(16 * var(--p));background:rgba(180,195,184,.28);display:flex;flex-direction:column;gap:calc(10 * var(--p))}
+.lg-note .ov{color:var(--red)}
+.lg-note p{color:var(--green)}
+
+.lg-ct{margin:calc(8 * var(--p)) 0 0;max-width:calc(680 * var(--p));box-sizing:border-box;border:1px solid rgba(20,32,25,.14);border-radius:calc(16 * var(--p));padding:calc(8 * var(--p)) calc(28 * var(--p))}
+.lg-ct>div{display:grid;grid-template-columns:calc(130 * var(--p)) minmax(0,1fr);align-items:baseline;padding:calc(16 * var(--p)) 0;border-top:1px solid rgba(20,32,25,.1)}
+.lg-ct>div:first-child{border-top:0}
+.lg-ct dd{margin:0;font-size:calc(20 * var(--p));line-height:calc(28 * var(--p));letter-spacing:-0.01em;color:var(--green)}
+.lg-ct a{background:none}
+.lg-ct a:hover{color:var(--green)}
+.lg .go:hover::after{right:0}
+
+/* Closing band + footer */
+.lg-end{position:relative;overflow:clip;background:var(--black);color:var(--white);padding:calc(120 * var(--p)) calc(40 * var(--p)) 0}
+.lg-q{display:flex;flex-direction:column;align-items:flex-start;gap:calc(40 * var(--p))}
+.lg-qh{margin:0;font-size:calc(80 * var(--p));line-height:calc(76 * var(--p));letter-spacing:-0.045em}
+.lg-qh .ser{color:var(--red-bright);font-size:1.06em;letter-spacing:-0.02em}
+.lg-qa{display:flex;align-items:center;gap:calc(32 * var(--p));flex-wrap:wrap}
+.lg-qm{font-size:calc(24 * var(--p));line-height:calc(30 * var(--p));letter-spacing:-0.02em;background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;transition:background-size .5s cubic-bezier(.7,0,.2,1)}
+.lg-qm:hover{background-size:100% 1px}
+
+@media (max-width:1023px){
+.lg-top,.lg{padding-left:16px;padding-right:16px}
+.lg{padding-bottom:112px}
+.lg-hd{padding:96px 0 40px;gap:24px}
+.lg-l{font-size:88px;line-height:78px}
+.lg-l2{font-size:94px;line-height:82px}
+.lg-meta{margin-top:24px;row-gap:24px}
+.lg-meta p:nth-child(1){grid-column:1/span 6}
+.lg-meta p:nth-child(2){grid-column:7/span 6}
+.lg-sw{grid-column:1/-1;justify-self:start;flex-wrap:wrap}
+.lg-body{display:block;padding-top:40px}
+.lg-toc{display:none}
+.lg-s{display:block;padding:32px 0 40px}
+.lg-sh{margin-bottom:20px;gap:16px}
+.lg-n{width:32px;font-size:24px;line-height:32px}
+.lg-sh h2{font-size:30px;line-height:34px}
+.lg-sb{padding-left:48px;font-size:17px;line-height:26px}
+.lg-ls-t li{grid-template-columns:180px minmax(0,1fr)}
+.lg-end{padding:96px 16px 32px}
+.lg-qh{font-size:56px;line-height:54px}
+}
+@media (max-width:767px){
+.lg-top,.lg{padding-left:20px;padding-right:20px}
+.lg-end{padding-left:20px;padding-right:20px}
+.lg-hd{padding-top:80px}
+.lg-l{font-size:60px;line-height:56px}
+.lg-l2{font-size:64px;line-height:58px}
+.lg-l>span{white-space:normal}
+.lg-meta p:nth-child(1),.lg-meta p:nth-child(2){grid-column:1/-1}
+.lg-meta p{font-size:15px;line-height:22px}
+.lg-sh{flex-direction:column;gap:4px}
+.lg-n{width:auto;font-size:20px;line-height:28px}
+.lg-sh h2{font-size:26px;line-height:30px}
+.lg-sb{padding-left:0;font-size:16px;line-height:25px}
+.lg-ls-t li{display:flex;flex-direction:column;gap:2px}
+.lg-note{padding:20px}
+.lg-ct{padding:4px 20px}
+.lg-ct>div{grid-template-columns:1fr;gap:4px}
+.lg-ct dd{font-size:18px;line-height:26px}
+.lg-qh{font-size:40px;line-height:40px}
+.lg-qa{flex-direction:column;align-items:flex-start;gap:20px}
+}

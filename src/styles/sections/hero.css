@@ -1,0 +1,48 @@
+@media (max-width:1023px){
+.hero{--p:1px}
+}
+.hero{--u:calc(var(--p) * 14.4);position:relative;height:100svh;min-height:calc(760 * var(--p));max-height:calc(1000 * var(--p));overflow:hidden;background:var(--white);color:var(--green);padding:0 calc(40 * var(--p));box-sizing:border-box;display:flex;flex-direction:column}
+.hero .pill-p{background:var(--green);color:var(--white)}
+.hero .pill-p::before{background:var(--red)}
+.hero .pill-s{box-shadow:inset 0 0 0 1px var(--green);color:var(--green)}
+.hero .pill-s::before{background:var(--green)}
+.hero .pill-s:hover{color:var(--white)}
+.hero-txt{width:100%;display:flex;flex-direction:column;align-items:center;text-align:center;padding:calc(96 * var(--p)) 0 0;position:relative;z-index:3}
+.scene{position:relative;flex:1 1 auto;min-height:0;margin:0 calc(-40 * var(--p)) calc(8 * var(--p));z-index:1;perspective:calc(80 * var(--u));perspective-origin:50% 50%;overflow:hidden}
+.ring{position:absolute;inset:0;transform-style:preserve-3d}
+.glc{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:1}
+.probe{position:absolute;left:0;top:0;width:calc(48 * var(--u));height:0;visibility:hidden;pointer-events:none}
+.card{position:absolute;left:50%;top:50%;width:calc(48 * var(--u));height:calc(32 * var(--u));margin:calc(-16 * var(--u)) 0 0 calc(-24 * var(--u));object-fit:cover;display:block;border-radius:0;backface-visibility:hidden;animation:arc 80s linear infinite;will-change:transform}
+.scene:hover .card{animation-play-state:paused}
+@keyframes arc{from{transform:translateZ(calc(80 * var(--u))) rotateY(-84deg) translateZ(calc(-120 * var(--u)))}to{transform:translateZ(calc(80 * var(--u))) rotateY(84deg) translateZ(calc(-120 * var(--u)))}}
+@media (prefers-reduced-motion:reduce){
+.card{animation-play-state:paused}
+}
+@media (max-width:1023px){
+.h1a{font-size:44px!important;line-height:48px!important}
+.h1b{font-size:48px!important;line-height:52px!important}
+}
+@media (max-width:1023px){
+.hero{--p:1px}
+.hero{--u:calc(100vw / 64);height:auto;min-height:100svh;max-height:none}
+.hero-txt{padding-top:96px}
+.h1a,.h1b{white-space:normal!important;display:inline-block}
+.h1a{font-size:64px!important;line-height:60px!important}
+.h1b{font-size:68px!important;line-height:64px!important}
+.hero-sub{width:auto!important;max-width:520px!important;font-size:18px!important;line-height:26px!important}
+.scene{min-height:360px}
+}
+@media (max-width:767px){
+.hero{padding-left:20px!important;padding-right:20px!important}
+.hero-txt{padding-top:80px}
+.h1a{font-size:44px!important;line-height:42px!important}
+.h1b{font-size:47px!important;line-height:44px!important}
+.hero-sub{font-size:17px!important;line-height:24px!important}
+.hero{--u:calc(100vw / 54)}
+.scene{margin-left:-20px!important;margin-right:-20px!important;min-height:300px}
+}
+.scene[data-gl] .ring{display:none}
+.intro .hero .rise,.intro .hero .fade{animation-play-state:paused}
+.intro .hero .ring{visibility:hidden}
+/* The italic line's mask has extra bottom padding and its ascenders overshoot the line box, so it starts further down. */
+.h1b{--rise-from:175%}

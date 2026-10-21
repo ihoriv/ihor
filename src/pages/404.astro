@@ -1,19 +1,35 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/sections/Header.astro';
+import Button from '../components/ui/Button.astro';
+import Label from '../components/ui/Label.astro';
+import '../styles/sections/legal.css';
+import { site } from '../data/site';
 ---
-
-<Layout title="Page not found — ihor.me" description="The page you're looking for doesn't exist." noindex>
-  <section class="legal-section">
-    <div class="u---spacer is--full"></div>
-    <div class="container">
-      <div class="legal-content" data-reveal>
-        <h1>404 — Page not found</h1>
-        <p>The page you're looking for doesn't exist or has moved.</p>
-        <p><a href="/">Back to the homepage</a></p>
+<BaseLayout title={`Page not found — ${site.name}`} description="The page you are looking for does not exist or has moved." noindex>
+  <div class="lg-top"><Header /></div>
+  <main class="lg nf">
+    <div class="lg-hd" id="content" tabindex="-1" style="border-bottom:0">
+      <Label text="Error 404" class="fade" />
+      <h1 class="lg-t">
+        <span class="lg-l"><span class="rise" style="animation-delay:.1s">This page</span></span>
+        <span class="lg-l lg-l2"><span class="rise ser" style="animation-delay:.22s">outgrew itself.</span></span>
+      </h1>
+      <p class="fade nf-p" style="animation-delay:.4s">The link may be old, or the page has moved. Everything else is one click away.</p>
+      <div class="fade nf-a" style="animation-delay:.5s">
+        <Button href="/" label="back to the homepage" size="sm" />
+        <Button href="/#cases" label="see the work" variant="s" size="sm" icon="down" />
       </div>
     </div>
-    <div class="u---spacer"></div>
-  </section>
-</Layout>
+  </main>
+</BaseLayout>
 
-<script is:inline src="/scripts/site.js"></script>
+<style>
+  .nf{min-height:70svh}
+  .nf-p{margin:0;max-width:calc(520 * var(--p));font-size:calc(20 * var(--p));line-height:calc(28 * var(--p));color:rgba(20,32,25,.78)}
+  .nf-a{display:flex;gap:calc(12 * var(--p));flex-wrap:wrap;margin-top:calc(8 * var(--p))}
+  @media (max-width:1023px){
+    .nf-p{max-width:520px;font-size:18px;line-height:26px}
+    .nf-a{gap:12px}
+  }
+</style>

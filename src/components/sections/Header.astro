@@ -1,0 +1,14 @@
+---
+import '../../styles/sections/header.css';
+import Button from '../ui/Button.astro';
+import { nav, site } from '../../data/site';
+---
+<div class="in fade" style="animation-delay:.05s;width:100%;padding-top:calc(16 * var(--p));z-index:10">
+  <header class="nav" style="position:relative;height:calc(36 * var(--p));display:flex;align-items:center;justify-content:space-between;z-index:10">
+    <a href="/" aria-label="Ihor Ivanchenko, home" style="font-size:calc(24 * var(--p));line-height:calc(30 * var(--p));letter-spacing:-0.03em">ihor</a>
+    <nav aria-label="Main" class="hm" style="display:flex;gap:calc(32 * var(--p));font-size:calc(14 * var(--p));line-height:calc(20 * var(--p))">
+      {nav.map((n) => <a class="l" href={n.href}>{n.label}</a>)}
+    </nav>
+    <Button href={site.booking} label="book a call" style="height:calc(36 * var(--p));padding:0 calc(16 * var(--p));font-size:calc(14 * var(--p));gap:calc(8 * var(--p))" />
+  </header>
+</div>

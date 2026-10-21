@@ -1,0 +1,28 @@
+---
+import '../../styles/sections/faq.css';
+import Label from '../ui/Label.astro';
+import { faq } from '../../data/faq';
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+<section id="faq" class="fq" aria-label="FAQ">
+  <div class="fq-in">
+    <header class="fq-hd"><Label text="Before you book" /><h2>Straight answers <span class="ser">before we talk.</span></h2></header>
+    <div class="fq-list">
+      {faq.map((f, i) => (
+        <div class:list={['fq-i', i === 0 && 'on']}>
+          <h3 class="fq-h">
+            <button type="button" class="fq-b" id={`fqb${i}`} aria-expanded={i === 0 ? 'true' : 'false'} aria-controls={`fqp${i}`}>
+              <span class="fq-n" aria-hidden="true">{pad(i + 1)}</span>{' '}<span class="fq-q">{f.q}</span><span class="fq-t" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="fq-p" id={`fqp${i}`} role="region" aria-labelledby={`fqb${i}`}><div class="fq-pi"><p>{f.a}</p></div></div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initFaq } from '../../scripts/faq';
+  initFaq();
+</script>

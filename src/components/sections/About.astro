@@ -1,0 +1,27 @@
+---
+import '../../styles/sections/about.css';
+import { Image } from 'astro:assets';
+import Label from '../ui/Label.astro';
+import desk from '../../assets/about/desk.jpg';
+const facts = [
+  ['Experience', '10+ years'],
+  ['Clients', '200+ companies'],
+  ['Reach', '5 continents'],
+  ['Based in', 'Kharkiv, Ukraine'],
+];
+---
+<section id="about" class="ab4 fit" aria-label="About Ihor">
+  <Image class="ab4-bg" src={desk} alt="Ihor at his desk, working on a website" widths={[800, 1400, 2200]} sizes="100vw" />
+  <div class="ab4-in">
+    <Label text="The one behind it all" />
+    <div class="ab4-bot">
+      <div class="ab4-top">
+        <h2 class="ab4-h">I treat your website as a sales tool first <span class="ser">and a design project second.</span></h2>
+        <p class="ab4-p">I’m Ihor Ivanchenko, a senior UX/UI designer, art director and design engineer. For over ten years I’ve watched strong companies lose deals to weaker ones with better websites. So I learned the whole job: how your business sells, how each page should read, and how to build it properly.</p>
+      </div>
+      <ul class="ab4-rows">
+        {facts.map(([k, v]) => <li><span>{k}</span><span>{v}</span></li>)}
+      </ul>
+    </div>
+  </div>
+</section>

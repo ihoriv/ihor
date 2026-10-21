@@ -1,0 +1,46 @@
+---
+import '../../styles/sections/process.css';
+import Label from '../ui/Label.astro';
+import { steps, phases } from '../../data/process';
+const pad = (n: number) => String(n).padStart(2, '0');
+const weeks = Array.from({ length: 8 }, (_, i) => i + 1);
+/* Scroll choreography: keyframes prwk, prfill, prhead, prg0..2 and prs0..2 in process.css. */
+---
+<section id="process" class="pr2 fit" aria-label="Process">
+  <div class="pr2-s">
+    <div class="pr2-in">
+      <div class="pr2-top">
+        <div>
+          <Label text="How it goes" />
+          <h2 class="pr2-h">Three steps.<br /><span class="ser">No surprises.</span></h2>
+          <p class="pr2-sub">Fixed price, agreed after week one.<br />Most projects launch in 3 to 8 weeks.</p>
+        </div>
+        <div class="wk" aria-label="Typical timeline: 3 to 8 weeks">
+          <span class="wk-l">Week</span>
+          <div class="wk-n" aria-hidden="true"><span class="pa" style="animation-name:prwk">{weeks.map((w) => <span>{pad(w)}</span>)}</span></div>
+          <span class="wk-of" aria-hidden="true">/08</span>
+        </div>
+      </div>
+      <div class="tl2" aria-hidden="true">
+        <span class="tl2-track"></span><span class="tl2-fill pa" style="animation-name:prfill"></span><span class="tl2-head pa" style="animation-name:prhead"></span>
+        {phases.map((ph, i) => (
+          <div class="tl2-seg" style={`left:calc(${(ph.from / 8) * 100}% + 2px);width:calc(${(ph.weeks / 8) * 100}% - calc(4 * var(--p)))`}>
+            <span class="tl2-segbg"></span><b>{ph.label}</b>
+            <i class="pa" style={`position:absolute;inset:0;background:${ph.fill};z-index:1;animation-name:prg${i}`}><b style="color:var(--green)">{ph.label}</b></i>
+          </div>
+        ))}
+        {weeks.map((w) => <span class="tl2-tick">W{w}</span>)}
+      </div>
+      <div class="stp3">
+        {steps.map((s, i) => (
+          <div class="pa" style={`animation-name:prs${i}`}>
+            <div class="stp-hd"><span class="n">{pad(i + 1)}</span><span class="ov">{s.when}</span></div>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+            <div class="gets"><span class="gets-l">You get</span><span class="gets-v">{s.result}</span></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

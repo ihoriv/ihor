@@ -1,5 +1,5 @@
+# ihor.me: everything is public. Search engines and AI assistants are welcome.
 User-agent: *
 Allow: /
-Disallow: /style-guide
 
 Sitemap: https://ihor.me/sitemap-index.xml
