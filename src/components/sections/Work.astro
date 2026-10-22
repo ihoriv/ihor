@@ -43,11 +43,11 @@ const facts = [
       })}
     </div>
 
-    <div class="meta mute" style="display:flex;justify-content:space-between;margin-top:calc(64 * var(--p))"><span>(More work)</span><span>{pad(featured.length + 1)} — {total}</span></div>
+    <div class="meta mute cs-more" style="display:flex;justify-content:space-between;margin-top:calc(64 * var(--p))"><span>(More work)</span><span>{pad(featured.length + 1)} — {total}</span></div>
     <div class="grid2" style="margin-top:calc(40 * var(--p))">
       {more.map((p, i) => (
         <a class="case" href={p.url} target="_blank" rel="noopener">
-          <div class="case-m"><Image src={p.image} alt={p.alt} widths={[700, 1100]} sizes="(max-width: 767px) 100vw, 50vw" /></div>
+          <div class="case-m"><Image src={p.image} alt={p.alt} widths={[480, 760, 1100]} sizes="(max-width: 767px) 100vw, 50vw" /></div>
           <div class="case-i">
             <span class="ser mute" style="grid-column:1/span 1;font-size:calc(20 * var(--p));line-height:calc(28 * var(--p))">{pad(featured.length + i + 1)}</span>
             <h3 style="grid-column:2/span 3;margin:0;font-size:calc(32 * var(--p));line-height:calc(36 * var(--p));font-weight:400;letter-spacing:-0.02em">{p.name}</h3>

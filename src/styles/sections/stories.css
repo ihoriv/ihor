@@ -55,4 +55,11 @@
 .cv-st{column-gap:12px;margin-top:28px}
 .cv-st dd{font-size:28px;line-height:32px}
 .cv-ft{gap:14px;margin-top:24px}
+/* Smaller cards: a quieter quote over a deeper gradient that starts just above it, so the video still reads. */
+.cv-o{padding:16px;background:linear-gradient(180deg,rgba(20,32,25,.5) 0%,rgba(20,32,25,0) 20%,rgba(20,32,25,0) 48%,rgba(20,32,25,.55) 62%,rgba(20,32,25,.85) 78%,rgba(20,32,25,.94) 100%)}
+.cv-qt{gap:12px}
+.cv-qt q{font-size:15px;line-height:21px}
+.cv-au{gap:2px}
+.cv-au b{font-size:14px;line-height:20px}
+.cv-au span{font-size:12px;line-height:16px}
 }

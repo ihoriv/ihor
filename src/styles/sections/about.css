@@ -31,4 +31,11 @@
 @media (max-width:767px){
 .ab4{padding:0 20px!important}
 .ab4-h{font-size:36px!important;line-height:36px!important}
+/* Phones: the photo sits on top as a square and fades into the dark; the copy starts in the fade and continues on solid dark.
+   The fade runs a little past the photo so its zoom never shows an edge. */
+.ab4{--ph:min(100vw, 560px);min-height:0!important}
+.ab4-bg{height:var(--ph);bottom:auto;object-position:42% 40%}
+.ab4::after{bottom:auto;height:calc(var(--ph) * 1.08);background:linear-gradient(to bottom,rgba(11,13,11,.35) 0%,rgba(11,13,11,0) 18%,rgba(11,13,11,0) 42%,rgba(11,13,11,.7) 66%,rgba(11,13,11,.93) 84%,var(--black-deep) 100%)}
+.ab4-in{min-height:0;padding:calc(var(--ph) * .6) 0 56px!important;justify-content:flex-start;gap:20px}
+.ab4-p{color:rgba(255,255,255,.78)}
 }

@@ -1,3 +1,6 @@
+/* Line breaks used only by the phone heading. */
+.ct-br{display:none}
+@keyframes ctf{from{opacity:0;transform:translateY(24px)}}
 .bk-g{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);background-size:calc(40 * var(--p)) calc(40 * var(--p));background-position:center center;-webkit-mask-image:radial-gradient(ellipse 70% 80% at 50% 45%,#000 20%,transparent 85%);mask-image:radial-gradient(ellipse 70% 80% at 50% 45%,#000 20%,transparent 85%)}
 .bk-c{position:absolute;width:calc(12 * var(--p));height:calc(12 * var(--p));z-index:1}
 .bk-c::before,.bk-c::after{content:"";position:absolute;background:rgba(255,255,255,.45)}
@@ -48,4 +51,11 @@
 @media (max-width:767px){
 .ct{padding-left:20px!important;padding-right:20px!important}
 .ct-h{font-size:40px!important;line-height:38px!important}
+/* The heading flows as one block with its own breaks: "Let's make your / website as strong / as your company." */
+.ct-l{display:contents}
+.ct-l>span{display:inline;animation:none}
+.ct-br{display:inline}
+@media (prefers-reduced-motion:no-preference){
+.ct-h{animation:ctf linear both;animation-timeline:view();animation-range:entry 20% cover 45%}
+}
 }

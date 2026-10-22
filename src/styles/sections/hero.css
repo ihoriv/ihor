@@ -1,3 +1,5 @@
+/* Line breaks used only by the phone headline. */
+.br-m{display:none}
 @media (max-width:1023px){
 .hero{--p:1px}
 }
@@ -40,6 +42,22 @@
 .hero-sub{font-size:17px!important;line-height:24px!important}
 .hero{--u:calc(100vw / 54)}
 .scene{margin-left:-20px!important;margin-right:-20px!important;min-height:300px}
+/* Phones: a large three-line headline sized to the column, a smaller subheading, one CTA. */
+.hero-txt{padding-top:64px}
+/* The headline flows as one block with its own breaks: "Websites for / companies that / outgrew theirs." */
+.hero-h1{display:block!important;line-height:1}
+.h1-l1,.h1-l2{display:contents!important}
+.h1a,.h1b{display:inline!important;white-space:normal!important;animation:none!important;font-size:min(calc((100vw - 40px) / 7.3), 60px)!important;line-height:1!important}
+.br-m{display:inline}
+@media (prefers-reduced-motion:no-preference){
+.hero-h1{animation:fade 1.2s cubic-bezier(.16,.84,.24,1) .2s both}
+.intro .hero-h1{animation-play-state:paused}
+}
+.hero-sub{margin-top:20px!important;font-size:15px!important;line-height:22px!important;text-wrap:balance}
+.hero-sub+.fade{margin-top:28px!important}
+.hero-work{display:none!important}
+.hero{min-height:0}
+.scene{flex:none;height:48vw;min-height:0;margin-top:40px;margin-bottom:32px}
 }
 .scene[data-gl] .ring{display:none}
 .intro .hero .rise,.intro .hero .fade{animation-play-state:paused}

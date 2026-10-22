@@ -4,25 +4,34 @@ import Header from './Header.astro';
 import Button from '../ui/Button.astro';
 import { heroWorks } from '../../data/projects';
 import { site } from '../../data/site';
+import { getImage } from 'astro:assets';
 
-const textures = heroWorks.map((p) => p.image.src).join('|');
+/** Band textures as resized WebP: a small set for phones, a large one for wider screens. */
+const sized = await Promise.all(
+  heroWorks.map(async (p) => {
+    const [sm, lg] = await Promise.all([800, 1400].map((width) => getImage({ src: p.image, width, format: 'webp' })));
+    return { sm: sm.src, lg: lg.src };
+  }),
+);
+const texturesSm = sized.map((t) => t.sm).join('|');
+const texturesLg = sized.map((t) => t.lg).join('|');
 ---
 <section class="hero" id="top">
   <Header />
   <div class="in hero-txt" id="content" tabindex="-1">
-    <h1 style="margin:0;display:flex;flex-direction:column;align-items:center">
-      <span style="display:block;overflow:hidden"><span class="rise h1a" style="font-size:calc(96 * var(--p));line-height:calc(80 * var(--p));white-space:nowrap;font-weight:400;letter-spacing:-0.05em;animation-delay:.2s">Websites for companies</span></span>
-      <span style="display:block;overflow:hidden;padding:0 calc(24 * var(--p)) calc(24 * var(--p));margin-bottom:calc(-20 * var(--p))"><span class="rise h1b ser" style="font-size:calc(102 * var(--p));line-height:calc(84 * var(--p));white-space:nowrap;letter-spacing:-0.02em;color:var(--red);animation-delay:.35s">that outgrew theirs.</span></span>
+    <h1 class="hero-h1" style="margin:0;display:flex;flex-direction:column;align-items:center">
+      <span class="h1-l1" style="display:block;overflow:hidden"><span class="rise h1a" style="font-size:calc(96 * var(--p));line-height:calc(80 * var(--p));white-space:nowrap;font-weight:400;letter-spacing:-0.05em;animation-delay:.2s">Websites for<br class="br-m" /> companies</span></span>
+      <span class="h1-l2" style="display:block;overflow:hidden;padding:0 calc(24 * var(--p)) calc(24 * var(--p));margin-bottom:calc(-20 * var(--p))"><span class="rise h1b ser" style="font-size:calc(102 * var(--p));line-height:calc(84 * var(--p));white-space:nowrap;letter-spacing:-0.02em;color:var(--red);animation-delay:.35s">that<br class="br-m" /> outgrew theirs.</span></span>
     </h1>
     <p class="fade hero-sub" style="margin:calc(17 * var(--p)) 0 0;max-width:calc(560 * var(--p));font-size:calc(20 * var(--p));line-height:calc(28 * var(--p));color:rgba(20,32,25,.8);animation-delay:.55s;width:calc(520 * var(--p))">One senior specialist for strategy, design and engineering. Your site ends up as credible as your company.</p>
     <div class="fade" style="display:flex;gap:calc(12 * var(--p));flex-wrap:wrap;justify-content:center;margin-top:calc(36 * var(--p));animation-delay:.7s">
-      <Button href={site.booking} label="book an intro call" size="sm" />
-      <Button href="#cases" label="see the work" variant="s" size="sm" icon="down" />
+      <Button href={site.booking} external label="book an intro call" size="sm" />
+      <Button href="#cases" label="see the work" variant="s" size="sm" icon="down" class="hero-work" />
     </div>
   </div>
-  <div class="scene" id="work" role="group" aria-label="Selected work" data-textures={textures}>
+  <div class="scene" id="work" role="group" aria-label="Selected work" data-textures={texturesLg} data-textures-sm={texturesSm}>
     <div class="ring">
-      {heroWorks.map((p, i) => <img class="card" style={`animation-delay:-${i * 10}s`} src={p.image.src} alt={`${p.name} website`} loading="lazy" decoding="async" />)}
+      {heroWorks.map((p, i) => <img class="card" style={`animation-delay:-${i * 10}s`} src={sized[i].sm} srcset={`${sized[i].sm} 800w, ${sized[i].lg} 1400w`} sizes="(max-width: 1023px) 90vw, 690px" alt={`${p.name} website`} loading="lazy" decoding="async" />)}
     </div>
     <canvas class="glc" aria-hidden="true"></canvas>
     <i class="probe" aria-hidden="true"></i>

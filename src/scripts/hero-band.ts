@@ -65,6 +65,8 @@ float te=d*cos(atan(uRes.x*.5,f))+sqrt(R*R-d*d*pow(sin(atan(uRes.x*.5,f)),2.));f
 float kf=max(1.,(34.5*uU*f/de)/(uRes.y*.99));
 float Y=px.y*dep/f*kf;
 float w0=-ph*R/(5.*uU);
+// Away from the side edges there is no smear or colour split, so one sample is enough.
+if(e<=0.){gl_FragColor=band(w0,Y);return;}
 float sp=e*e*.46;
 float ca=e*e*.15;
 vec4 acc=vec4(0.);
@@ -99,7 +101,10 @@ export function initHeroBand() {
     releaseIntro();
   };
   if (!scene || !cv) return bail();
-  const srcs = (scene.dataset.textures || '').split('|').filter(Boolean);
+  // Phones get the smaller texture set when it still covers a card at the rendered pixel ratio.
+  const cardPx = (probe?.offsetWidth || 0) * Math.min(2, window.devicePixelRatio || 1);
+  const set = cardPx && cardPx <= 900 && scene.dataset.texturesSm ? scene.dataset.texturesSm : scene.dataset.textures;
+  const srcs = (set || '').split('|').filter(Boolean);
   const gl = cv.getContext('webgl', { premultipliedAlpha: true, alpha: true, antialias: false });
   if (!gl || !srcs.length) return bail();
 

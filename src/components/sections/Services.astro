@@ -17,9 +17,9 @@ const pad = (n: number) => String(n).padStart(2, '0');
           <h3 class="xp-h xa" style={`animation-name:xe${i}0`}>{s.title}</h3>
           <ul class="xp-tags xa" style={`animation-name:xe${i}1`}>{s.tags.map((t) => <li>{t}</li>)}</ul>
           <p class="xp-d xa" style={`animation-name:xe${i}2`}>{s.text}</p>
-          <div class="xa" style={`animation-name:xe${i}3`}><Button href={site.booking} label="discuss your project" variant="s" style="margin-top:calc(40 * var(--p))" /></div>
+          <div class="xa" style={`animation-name:xe${i}3`}><Button href={site.booking} external label="discuss your project" variant="s" style="margin-top:calc(40 * var(--p))" /></div>
         </div>
-        <div class="xp-i xa" style={`animation-name:xi${i}`}><video class="xa" src={s.video} autoplay muted loop playsinline preload="metadata" aria-hidden="true" style={`animation-name:xz${i}`}></video></div>
+        <div class="xp-i xa" style={`animation-name:xi${i}`}><video class="xa" src={s.video} muted loop playsinline preload="none" aria-hidden="true" style={`animation-name:xz${i}`}></video></div>
       </div>
     ))}
     <div class="xp-hd" style="position:absolute;left:calc(156 * var(--p));top:calc(104 * var(--p));z-index:6;pointer-events:none;display:flex;flex-direction:column;gap:calc(16 * var(--p))">
@@ -31,3 +31,8 @@ const pad = (n: number) => String(n).padStart(2, '0');
     </div>
   </div>
 </section>
+
+<script>
+  import { initServices } from '../../scripts/services';
+  initServices();
+</script>

@@ -11,12 +11,12 @@ import { site } from '../../data/site';
   <div class="in">
     <div class="ct-c">
       <Label text="Your turn" />
-      <h2 class="ct-h"><span class="ct-l"><span>Let’s make your website</span></span>{' '}<span class="ct-l"><span class="ser">as strong as your company.</span></span></h2>
+      <h2 class="ct-h"><span class="ct-l"><span>Let’s make your<br class="ct-br" /> website</span></span>{' '}<span class="ct-l"><span class="ser">as strong<br class="ct-br" /> as your company.</span></span></h2>
       <div class="ct-bk">
         <div class="bk-g" aria-hidden="true"></div>
         {[1, 2, 3, 4].map((n) => <span class={`bk-c bk-c${n}`} aria-hidden="true"></span>)}
         <div class="ct-who"><Image src={avatar} alt="" width={160} height={160} /><span><span class="ct-k">Intro call with</span><b>{site.name}</b></span></div>
-        <Button href={site.booking} label="book an intro call" variant="l" class="ct-go" />
+        <Button href={site.booking} external label="book an intro call" variant="l" class="ct-go" />
       </div>
       <p class="ct-m">Prefer email? <a href={`mailto:${site.email}`}>{site.email}</a></p>
     </div>

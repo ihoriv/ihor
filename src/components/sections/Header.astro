@@ -9,6 +9,6 @@ import { nav, site } from '../../data/site';
     <nav aria-label="Main" class="hm" style="display:flex;gap:calc(32 * var(--p));font-size:calc(14 * var(--p));line-height:calc(20 * var(--p))">
       {nav.map((n) => <a class="l" href={n.href}>{n.label}</a>)}
     </nav>
-    <Button href={site.booking} label="book a call" style="height:calc(36 * var(--p));padding:0 calc(16 * var(--p));font-size:calc(14 * var(--p));gap:calc(8 * var(--p))" />
+    <Button href={site.booking} external label="book a call" style="height:calc(36 * var(--p));padding:0 calc(16 * var(--p));font-size:calc(14 * var(--p));gap:calc(8 * var(--p))" />
   </header>
 </div>

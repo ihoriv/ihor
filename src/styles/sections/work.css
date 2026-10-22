@@ -50,4 +50,13 @@
 .cs-lead{font-size:26px!important;line-height:32px!important}
 .grid2{grid-template-columns:1fr!important}
 .sc .case-i h3{font-size:28px!important;line-height:30px!important}
+/* Phones: works 05-08 continue the list as the same cards as 01-04, without the "more work" label or links. */
+.cs-more{display:none!important}
+.grid2{margin-top:72px!important;row-gap:72px}
+.grid2 .case{gap:16px}
+.grid2 .case-m{aspect-ratio:4/3}
+.grid2 .case-i{display:flex;flex-direction:column;gap:24px;padding-top:16px}
+.grid2 .case-i>.ser{font-size:24px!important;line-height:30px!important}
+.grid2 .case-i h3{font-size:28px!important;line-height:30px!important}
+.grid2 .case-i>.meta{display:none}
 }

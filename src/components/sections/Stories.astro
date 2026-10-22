@@ -1,10 +1,11 @@
 ---
 import '../../styles/sections/stories.css';
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import Button from '../ui/Button.astro';
 import Label from '../ui/Label.astro';
 import { stories } from '../../data/stories';
 const pad = (n: number) => String(n).padStart(2, '0');
+const posters = await Promise.all(stories.map(async (s) => (await getImage({ src: s.poster, width: 1200, format: 'webp' })).src));
 ---
 <section class="cs" aria-label="Client stories">
   <div style="position:relative;z-index:1">
@@ -18,7 +19,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
       {stories.map((s, i) => (
         <article class="cv g12" style={`--i:${i}`}>
           <div class="cv-v">
-            <video muted loop playsinline preload="metadata" poster={s.poster.src} src={s.video}></video>
+            <video muted loop playsinline preload="metadata" poster={posters[i]} src={s.video}></video>
             <button class="cv-o" type="button" aria-label={`Play video review from ${s.author} with sound`}>
               <span class="cv-top">
                 <Image class="cv-lg" src={s.logo} alt={s.logoAlt} height={48} />
