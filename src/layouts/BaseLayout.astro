@@ -22,7 +22,7 @@ const { title = site.title, description = site.description, intro = false, bread
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const isHome = Astro.url.pathname === '/';
 /** Social preview image, shared by every page (2400×1260, i.e. 1200×630 at 2x). */
-const ogImage = new URL('/og.webp', site.url).href;
+const ogImage = new URL('/og-v2.webp', site.url).href;
 const ogAlt = 'Ihor Ivanchenko: websites for companies that outgrew theirs. Strategy, design and engineering from one senior specialist.';
 const avatar = new URL((await getImage({ src: avatarSrc, width: 400, format: 'jpg' })).src, site.url).href;
 const schema = noindex ? null : buildSchema({ url: canonical, title, description, ogImage, avatar, breadcrumb, modified, isHome });

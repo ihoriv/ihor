@@ -7,7 +7,7 @@
 .ft{margin-top:calc(120 * var(--p))}
 .ft-top{padding:calc(64 * var(--p)) 0;border-top:1px solid rgba(255,255,255,.16);align-items:start}
 .ft-id{grid-column:1/span 4;display:flex;flex-direction:column;gap:calc(12 * var(--p))}
-.ft-nm{margin:0;font-size:calc(32 * var(--p));line-height:calc(36 * var(--p));letter-spacing:-0.03em}
+.ft-nm{display:block;align-self:flex-start;height:calc(64 * var(--p));width:auto}
 .ft-bio{margin:0;max-width:calc(360 * var(--p));font-size:calc(16 * var(--p));line-height:calc(24 * var(--p));color:rgba(255,255,255,.7)}
 .ft-loc{margin:calc(12 * var(--p)) 0 0;display:flex;align-items:center;gap:calc(8 * var(--p));font-size:calc(14 * var(--p));line-height:calc(20 * var(--p));color:rgba(255,255,255,.7)}
 .ft-clock{color:var(--white);font-variant-numeric:tabular-nums}
