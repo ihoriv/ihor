@@ -2,24 +2,36 @@
 import '../../styles/sections/contact.css';
 import { Image } from 'astro:assets';
 import Button from '../ui/Button.astro';
-import Label from '../ui/Label.astro';
 import Footer from './Footer.astro';
 import avatar from '../../assets/people/ihor-avatar.jpg';
+import desk from '../../assets/about/desk.jpg';
 import { site } from '../../data/site';
 ---
-<section id="contact" class="ct" aria-label="Start a project">
-  <div class="in">
-    <div class="ct-c">
-      <Label text="Your turn" />
-      <h2 class="ct-h"><span class="ct-l"><span>Let’s make your<br class="ct-br" /> website</span></span>{' '}<span class="ct-l"><span class="ser">as strong<br class="ct-br" /> as your company.</span></span></h2>
-      <div class="ct-bk">
-        <div class="bk-g" aria-hidden="true"></div>
-        {[1, 2, 3, 4].map((n) => <span class={`bk-c bk-c${n}`} aria-hidden="true"></span>)}
-        <div class="ct-who"><Image src={avatar} alt="" width={160} height={160} /><span><span class="ct-k">Intro call with</span><b>{site.name}</b></span></div>
-        <Button href={site.booking} external label="book an intro call" variant="l" class="ct-go" />
+<!-- About and the call to action in one: Ihor's desk photo behind the closing line, a short bio and the booking card.
+     The black footer sits under it and is revealed as this section scrolls away. -->
+<div class="ft-zone">
+<section id="about" class="ct fit" aria-label="About Ihor and starting a project">
+  <Image class="ct-bg" src={desk} alt="Ihor at his desk, working on a website" widths={[800, 1400, 2200]} sizes="100vw" />
+  <div class="ct-in">
+    <div class="ct-bot">
+      <div class="ct-c">
+        <h2 class="ct-h"><span class="ct-l"><span>Let’s make your<br class="ct-br" /> website</span></span>{' '}<span class="ct-l"><span>as strong<br class="ct-br" /> as your company.</span></span></h2>
+        <p class="ct-p">I’m Ihor, a senior designer and design engineer. For over ten years I’ve watched strong companies lose deals to weaker ones with better websites, so I treat yours as a sales tool first and a design project second.</p>
       </div>
-      <p class="ct-m">Prefer email? <a href={`mailto:${site.email}`}>{site.email}</a></p>
+      <div class="ct-bk" id="contact">
+        <div class="ct-who">
+          <Image src={avatar} alt="" width={160} height={160} />
+          <span><span class="ct-k">Intro call with</span><b>{site.name}</b></span>
+        </div>
+        <ul class="ct-pts">
+          <li>A fixed quote after the call</li>
+          <li>Launch in 3 to 8 weeks</li>
+        </ul>
+        <Button href={site.booking} external label="book an intro call" class="ct-go" />
+        <p class="ct-m"><span>Prefer email?</span><a href={`mailto:${site.email}`}>{site.email}</a></p>
+      </div>
     </div>
-    <Footer />
   </div>
 </section>
+<Footer />
+</div>

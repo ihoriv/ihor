@@ -10,8 +10,6 @@
 
 :root{
   --white:#fff;
-  --green:#142019;
-  --sage:#b4c3b8;
   --red:#a3161f;
   --red-bright:#f2474f;
   --black:#0f110f;
@@ -26,5 +24,4 @@
   :root,.hero,.xp,.fit{--p:1px}
 }
 
-@property --cv{syntax:'<length>';inherits:false;initial-value:0px}
-@property --xc{syntax:'<color>';inherits:true;initial-value:#142019}
+@property --xc{syntax:'<color>';inherits:true;initial-value:#0f110f}

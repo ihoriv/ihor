@@ -1,0 +1,45 @@
+---
+import '../../styles/sections/compare.css';
+import { Image } from 'astro:assets';
+import avatar from '../../assets/people/ihor-avatar.jpg';
+import { compareCols, compareRows, type Cell } from '../../data/compare';
+const isMark = (c: Cell): c is Exclude<Cell, string> => typeof c !== 'string';
+---
+<!-- A real table on purpose: search engines and AI assistants read rows and columns as facts. -->
+<section id="compare" class="cp" aria-labelledby="cp-h">
+  <div class="in">
+    <div class="cp-hd g12">
+      <h2 class="cp-h" id="cp-h">How it compares.</h2>
+      <p class="cp-sub">What you get working with me directly, next to a typical freelancer or agency.</p>
+    </div>
+    <div class="cp-wrap">
+      <table class="cp-t">
+        <caption class="sr">Working with Ihor Ivanchenko compared with a typical freelancer and a typical web design agency</caption>
+        <thead>
+          <tr>
+            <td></td>
+            {compareCols.map((c, i) => (
+              <th scope="col" class={i === 0 ? 'me' : ''}>
+                {i === 0 ? <span class="cp-me"><Image src={avatar} alt="" width={64} height={64} />Ihor</span> : c}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {compareRows.map((r) => (
+            <tr>
+              <th scope="row">{r.k}</th>
+              {r.c.map((c, i) => (
+                <td class={i === 0 ? 'me' : ''}>
+                  {isMark(c) ? (
+                    <span class={`cp-m cp-${c.m}`}><i aria-hidden="true"></i><span>{c.t}</span></span>
+                  ) : c}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

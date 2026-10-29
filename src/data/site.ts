@@ -18,4 +18,3 @@ export const nav = [
   { label: 'faq', href: '/#faq' },
 ];
 
-export const marquee = ['Strategy', 'Design', 'Engineering', '10+ years', '200+ projects', 'Marketing'];

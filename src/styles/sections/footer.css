@@ -4,37 +4,57 @@
 .wl span[data-w0="430"]{font-weight:430}
 .wl span[data-w0="660"]{font-weight:660}
 .wl span[data-w0="900"]{font-weight:900}
-.ft{margin-top:calc(120 * var(--p))}
-.ft-top{padding:calc(64 * var(--p)) 0;border-top:1px solid rgba(255,255,255,.16);align-items:start}
+/* Black footer. On desktop it is sticky at the bottom, underneath the section before it (that section has z-index:1),
+   so it is revealed as that section scrolls away. .ft-zone wraps just that section and the footer, so the sticky footer
+   can never sit behind any other part of the page. Its content rises and sharpens into place over the same scroll,
+   timed by .ft-mk, an empty marker where the footer starts in the page flow. */
+body{timeline-scope:--ftv}
+.ft-zone{position:relative}
+.ft-mk{height:0;view-timeline-name:--ftv}
+.ft{position:relative;z-index:0;background:var(--black);color:var(--white);padding:calc(24 * var(--p)) calc(40 * var(--p)) 0}
+@media (min-width:1024px){
+.ft{position:sticky;bottom:0}
+}
+@supports (animation-timeline: view()){
+@media (min-width:1024px) and (prefers-reduced-motion:no-preference){
+.ft-top,.ft-bot{animation:ftin linear both;animation-timeline:--ftv;animation-range:cover 0px cover calc(380 * var(--p))}
+.ft-bot{animation-range:cover calc(60 * var(--p)) cover calc(420 * var(--p))}
+}
+}
+@keyframes ftin{from{opacity:0;transform:translateY(calc(-90 * var(--p))) scale(.94);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+.ft-top{padding:calc(64 * var(--p)) 0;align-items:start;transform-origin:50% 100%}
 .ft-id{grid-column:1/span 4;display:flex;flex-direction:column;gap:calc(12 * var(--p))}
 .ft-nm{display:block;align-self:flex-start;height:calc(64 * var(--p));width:auto}
-.ft-bio{margin:0;max-width:calc(360 * var(--p));font-size:calc(16 * var(--p));line-height:calc(24 * var(--p));color:rgba(255,255,255,.7)}
-.ft-loc{margin:calc(12 * var(--p)) 0 0;display:flex;align-items:center;gap:calc(8 * var(--p));font-size:calc(14 * var(--p));line-height:calc(20 * var(--p));color:rgba(255,255,255,.7)}
+.ft-bio{margin:0;max-width:calc(360 * var(--p));font-size:calc(16 * var(--p));line-height:calc(24 * var(--p));color:rgba(255,255,255,.62)}
+.ft-loc{margin:calc(12 * var(--p)) 0 0;display:flex;align-items:center;gap:calc(8 * var(--p));font-size:calc(14 * var(--p));line-height:calc(20 * var(--p));color:rgba(255,255,255,.62)}
 .ft-clock{color:var(--white);font-variant-numeric:tabular-nums}
 .ft-g{display:flex;flex-direction:column;align-items:flex-start}
 .ft-g1{grid-column:6/span 3}
 .ft-g2{grid-column:9/span 4}
-.ft-l{font-size:calc(12 * var(--p));line-height:calc(16 * var(--p));text-transform:uppercase;letter-spacing:.04em;color:rgba(255,255,255,.7);margin-bottom:calc(16 * var(--p))}
+.ft-l{font-size:calc(12 * var(--p));line-height:calc(16 * var(--p));text-transform:uppercase;letter-spacing:.04em;color:rgba(255,255,255,.55);margin-bottom:calc(16 * var(--p))}
 .ft-l2{margin-top:calc(32 * var(--p))}
 .ft-mail{font-size:calc(24 * var(--p));line-height:calc(30 * var(--p));letter-spacing:-0.02em;background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;transition:background-size .5s cubic-bezier(.7,0,.2,1)}
 .ft-mail:hover{background-size:100% 1px}
 .ft-msg{display:flex;gap:calc(8 * var(--p));margin-top:calc(16 * var(--p))}
-.ft-msg a,.ft-ai a{display:inline-flex;align-items:center;gap:calc(8 * var(--p));height:calc(40 * var(--p));padding:0 calc(16 * var(--p));border-radius:calc(999 * var(--p));box-shadow:inset 0 0 0 1px rgba(255,255,255,.2);font-size:calc(14 * var(--p));line-height:calc(20 * var(--p));transition:background-color .4s,color .4s,box-shadow .4s}
+.ft-msg a,.ft-ai a{display:inline-flex;align-items:center;gap:calc(8 * var(--p));height:calc(40 * var(--p));padding:0 calc(16 * var(--p));border-radius:calc(999 * var(--p));box-shadow:inset 0 0 0 1px rgba(255,255,255,.22);font-size:calc(14 * var(--p));line-height:calc(20 * var(--p));transition:background-color .4s,color .4s,box-shadow .4s}
 .ft-msg a:hover,.ft-ai a:hover{background:var(--white);color:var(--black);box-shadow:inset 0 0 0 1px var(--white)}
 .ft-soc{display:flex;gap:calc(8 * var(--p))}
-.ft-soc a{display:grid;place-items:center;width:calc(48 * var(--p));height:calc(48 * var(--p));border-radius:50%;box-shadow:inset 0 0 0 1px rgba(255,255,255,.2);transition:background-color .4s,color .4s,box-shadow .4s,transform .5s cubic-bezier(.2,.8,.2,1)}
+.ft-soc a{display:grid;place-items:center;width:calc(48 * var(--p));height:calc(48 * var(--p));border-radius:50%;box-shadow:inset 0 0 0 1px rgba(255,255,255,.22);transition:background-color .4s,color .4s,box-shadow .4s,transform .5s cubic-bezier(.2,.8,.2,1)}
 .ft-soc a:hover{background:var(--white);color:var(--black);box-shadow:inset 0 0 0 1px var(--white);transform:translateY(calc(-4 * var(--p)))}
 .ft-ai{display:flex;flex-wrap:wrap;gap:calc(8 * var(--p))}
 .ft-ai a{padding:0 calc(12 * var(--p))}
-.ft-bot{display:flex;align-items:center;justify-content:center;gap:calc(32 * var(--p));padding:calc(24 * var(--p)) 0;border-top:1px solid rgba(255,255,255,.16);border-bottom:1px solid rgba(255,255,255,.16);font-size:calc(14 * var(--p));line-height:calc(20 * var(--p));color:rgba(255,255,255,.7)}
+.ft-bot{display:flex;align-items:center;justify-content:center;gap:calc(32 * var(--p));padding:calc(24 * var(--p)) 0 calc(40 * var(--p));border-top:1px solid rgba(255,255,255,.14);font-size:calc(14 * var(--p));line-height:calc(20 * var(--p));color:rgba(255,255,255,.5)}
 .ft-bot a{transition:color .3s}
 .ft-bot a:hover{color:var(--white)}
 .ft-wm{height:calc(470 * var(--p));overflow:hidden;margin:calc(40 * var(--p)) calc(-40 * var(--p)) 0;display:flex;justify-content:center}
-.ft-w{margin:-.05em 0 0;transform:translateX(calc(-36 * var(--p)));font-size:calc(920 * var(--p));line-height:.82;letter-spacing:-0.04em;white-space:nowrap;color:var(--white)}
+.ft-w{margin:-.05em 0 0;transform:translateX(calc(-36 * var(--p)));font-size:calc(920 * var(--p));line-height:.82;letter-spacing:-0.04em;white-space:nowrap;color:var(--black)}
 @media (max-width:1023px){
-.ft{margin-top:96px}
+.ft{padding:16px 40px 0}
 .ft-top{row-gap:40px;padding:48px 0}
 .ft-id,.ft-g1,.ft-g2{grid-column:1/-1}
 .ft-bot{flex-wrap:wrap;gap:16px 24px}
 .ft-wm{display:none}
+}
+@media (max-width:767px){
+.ft{padding:8px 20px 0}
 }

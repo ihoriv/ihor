@@ -1,12 +1,8 @@
+/** from/to are the weeks a step covers on the 8-week timeline; label is its short name there; items is what the step includes. */
 export const steps = [
-  { when: 'Week 1', title: 'I learn how you sell.', text: 'Discovery call, business analysis and a competitor review.', result: 'A sitemap and a fixed quote.' },
-  { when: 'Weeks 2–6', title: 'I design and build around it.', text: 'Copy direction, design and development, stage by stage.', result: 'Weekly previews you can click through.' },
-  { when: 'Weeks 7–8', title: 'I launch and hand it over.', text: 'QA, launch and a walkthrough for your team.', result: 'A site your team owns and edits.' },
+  { when: 'Week 1', from: 1, to: 1, label: 'Discovery', title: 'I learn how you sell.', text: 'Discovery call, business analysis and a competitor review.', items: ['Business analysis', 'Competitor review', 'Keyword & GEO research', 'Content plan'], result: 'A sitemap and a fixed quote.' },
+  { when: 'Weeks 2–6', from: 2, to: 6, label: 'Design & build', title: 'I design and build around it.', text: 'Copy direction, design and development, stage by stage.', items: ['UX/UI & design system', 'Responsive build', 'CMS you can edit', 'SEO, GEO & schema', 'WCAG 2.2 AA', 'Copy direction'], result: 'Weekly previews you can click through.' },
+  { when: 'Weeks 7–8', from: 7, to: 8, label: 'Launch', title: 'I launch and hand it over.', text: 'QA, launch and a walkthrough for your team.', items: ['Cross-browser QA', 'Core Web Vitals', 'Analytics & Search Console', 'Redirects & domain', 'Forms & integrations', 'Team walkthrough'], result: 'A site your team owns and edits.' },
 ];
 
-/** Timeline phases, in weeks out of 8. */
-export const phases = [
-  { label: 'Discovery', from: 0, weeks: 1, fill: 'var(--white)' },
-  { label: 'Design + build', from: 1, weeks: 5, fill: 'var(--sage)' },
-  { label: 'Launch', from: 6, weeks: 2, fill: 'var(--white)' },
-];
+export const weeks = 8;

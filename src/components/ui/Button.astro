@@ -1,12 +1,12 @@
 ---
 /**
  * Pill button with the rolling label and a trailing icon.
- * variant: p = dark fill, s = outline, l = white fill.
+ * variant: p = dark fill, s = outline.
  */
 interface Props {
   href: string;
   label: string;
-  variant?: 'p' | 's' | 'l';
+  variant?: 'p' | 's';
   size?: 'md' | 'sm';
   icon?: 'star' | 'down';
   external?: boolean;
@@ -20,3 +20,8 @@ const classes = ['pill', `pill-${variant}`, size === 'sm' && 'pill-sm', cls].fil
   <span class="roll"><span data-t={label}>{label}</span></span>
   {icon === 'down' ? <span class="arw" aria-hidden="true">↓</span> : <span class="st" aria-hidden="true">✦</span>}
 </a>
+
+<script>
+  import { initPillPaint } from '../../scripts/pill-paint';
+  initPillPaint();
+</script>

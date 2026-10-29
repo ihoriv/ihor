@@ -1,6 +1,0 @@
----
-/** Small uppercase section label, written in brackets: (Label). */
-interface Props { text: string; class?: string }
-const { text, class: cls = '' } = Astro.props;
----
-<span class:list={['ov', cls]}>({text})</span>

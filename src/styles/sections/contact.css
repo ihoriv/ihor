@@ -1,61 +1,77 @@
-/* Line breaks used only by the phone heading. */
-.ct-br{display:none}
-@keyframes ctf{from{opacity:0;transform:translateY(24px)}}
-.bk-g{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);background-size:calc(40 * var(--p)) calc(40 * var(--p));background-position:center center;-webkit-mask-image:radial-gradient(ellipse 70% 80% at 50% 45%,#000 20%,transparent 85%);mask-image:radial-gradient(ellipse 70% 80% at 50% 45%,#000 20%,transparent 85%)}
-.bk-c{position:absolute;width:calc(12 * var(--p));height:calc(12 * var(--p));z-index:1}
-.bk-c::before,.bk-c::after{content:"";position:absolute;background:rgba(255,255,255,.45)}
-.bk-c::before{left:50%;top:0;bottom:0;width:1px}
-.bk-c::after{top:50%;left:0;right:0;height:1px}
-.bk-c1{left:calc(24 * var(--p));top:calc(24 * var(--p))}
-.bk-c2{right:calc(24 * var(--p));top:calc(24 * var(--p))}
-.bk-c3{left:calc(24 * var(--p));bottom:calc(24 * var(--p))}
-.bk-c4{right:calc(24 * var(--p));bottom:calc(24 * var(--p))}
-.ct{position:relative;overflow:clip;background:var(--black);color:var(--white);padding:calc(120 * var(--p)) calc(40 * var(--p)) 0}
-.ct-c{display:flex;flex-direction:column;align-items:center;text-align:center}
-.ct-h{margin:calc(24 * var(--p)) 0 0;font-size:calc(80 * var(--p));line-height:calc(68 * var(--p));font-weight:400;letter-spacing:-0.055em}
-.ct-l{display:block;overflow:hidden;padding:0 .06em .12em;margin-bottom:-.12em}
-.ct-l>span{display:inline-block;animation:ctl linear both;animation-timeline:view();animation-range:entry 20% cover 45%}
-.ct-l+.ct-l>span{animation-range:entry 35% cover 52%}
-.ct-h .ser{color:var(--red-bright);font-size:1.06em;letter-spacing:-0.025em}
+/* About + call to action on Ihor's desk photo. .fit caps --p by height, so it is always one screen. */
+.ct{position:relative;z-index:1;height:100svh;min-height:calc(760 * var(--p));max-height:calc(1000 * var(--p));overflow:hidden;background:var(--black-deep);color:var(--white);padding:0 calc(40 * var(--p));box-sizing:border-box}
+/* Darkening: a heavy fade at the bottom for the heading and the card. */
+.ct::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse 70% 60% at 0% 100%,rgba(8,10,8,.9),rgba(8,10,8,0) 72%),linear-gradient(to top,var(--black-deep) 0%,rgba(11,13,11,.88) 14%,rgba(11,13,11,.2) 50%,rgba(11,13,11,0) 64%)}
+.ct-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%;display:block;transform:scale(1.08);animation:ctz linear both;animation-timeline:view();animation-range:entry 0% exit 100%}
+@keyframes ctz{to{transform:scale(1)}}
+.ct-in{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding:calc(40 * var(--p)) 0 calc(56 * var(--p));box-sizing:border-box}
+
+/* Bottom: the closing line and bio on the left, the booking card on the right. */
+.ct-bot{display:flex;justify-content:space-between;align-items:flex-end;gap:calc(64 * var(--p))}
+.ct-c{display:flex;flex-direction:column;gap:calc(24 * var(--p));max-width:calc(820 * var(--p))}
+.ct-h{margin:0;font-size:calc(72 * var(--p));line-height:calc(70 * var(--p));font-weight:400;letter-spacing:-0.045em}
+.ct-l{display:block;overflow:hidden;padding:0 .06em .22em;margin:0 -.06em -.22em}
+.ct-l>span{display:inline-block;animation:ctl linear both;animation-timeline:view();animation-range:entry 30% cover 55%}
+.ct-l+.ct-l>span{animation-range:entry 40% cover 62%}
 @keyframes ctl{from{transform:translateY(105%)}to{transform:none}}
-.ct-bk{position:relative;overflow:hidden;width:100%;max-width:calc(904 * var(--p));box-sizing:border-box;margin-top:calc(64 * var(--p));display:flex;align-items:center;justify-content:space-between;gap:calc(32 * var(--p));padding:calc(32 * var(--p)) calc(32 * var(--p)) calc(32 * var(--p)) calc(40 * var(--p));border-radius:calc(24 * var(--p));background:var(--black);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);text-align:left}
-.ct-bk>*:not(.bk-g):not(.bk-c){position:relative;z-index:2}
-.ct-bk .bk-g{-webkit-mask-image:radial-gradient(ellipse 60% 120% at 50% 50%,#000 10%,transparent 80%);mask-image:radial-gradient(ellipse 60% 120% at 50% 50%,#000 10%,transparent 80%)}
-.ct-bk .bk-c1,.ct-bk .bk-c2{top:calc(12 * var(--p))}
-.ct-bk .bk-c3,.ct-bk .bk-c4{bottom:calc(12 * var(--p))}
-.ct-bk .bk-c1,.ct-bk .bk-c3{left:calc(12 * var(--p))}
-.ct-bk .bk-c2,.ct-bk .bk-c4{right:calc(12 * var(--p))}
-.ct-who{display:flex;align-items:center;gap:calc(24 * var(--p))}
-.ct-who img{width:calc(80 * var(--p));height:calc(80 * var(--p));border-radius:50%;object-fit:cover;box-shadow:0 0 0 calc(4 * var(--p)) var(--black),0 0 0 calc(5 * var(--p)) rgba(255,255,255,.22)}
-.ct-who>span{display:flex;flex-direction:column}
-.ct-k{font-size:calc(12 * var(--p));line-height:calc(16 * var(--p));text-transform:uppercase;letter-spacing:.04em;color:rgba(255,255,255,.7);margin-bottom:calc(8 * var(--p))}
-.ct-who b{font-weight:400;font-size:calc(24 * var(--p));line-height:calc(30 * var(--p));letter-spacing:-0.02em}
-.ct .ct-go{height:calc(72 * var(--p));padding:0 calc(40 * var(--p));font-size:calc(18 * var(--p));gap:calc(12 * var(--p))}
-.ct-m{margin:calc(32 * var(--p)) 0 0;font-size:calc(16 * var(--p));line-height:calc(24 * var(--p));color:rgba(255,255,255,.7)}
+.ct-p{margin:0;max-width:calc(500 * var(--p));font-size:calc(17 * var(--p));line-height:calc(26 * var(--p));color:rgba(255,255,255,.72);text-wrap:pretty}
+.ct-br{display:none}
+
+/* Booking card: dark liquid glass over the photo. */
+.ct-bk{flex:none;width:calc(400 * var(--p));display:flex;flex-direction:column;gap:calc(20 * var(--p));padding:calc(24 * var(--p));box-sizing:border-box;border-radius:calc(28 * var(--p));background:linear-gradient(160deg,rgba(255,255,255,.16),rgba(255,255,255,.06));-webkit-backdrop-filter:blur(24px) saturate(160%);backdrop-filter:blur(24px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,.28),inset 0 0 0 1px rgba(255,255,255,.14),0 30px 60px -30px rgba(0,0,0,.6)}
+.ct-who{display:flex;align-items:center;gap:calc(16 * var(--p))}
+.ct-who img{width:calc(56 * var(--p));height:calc(56 * var(--p));border-radius:50%;object-fit:cover;box-shadow:0 0 0 calc(3 * var(--p)) rgba(255,255,255,.18)}
+.ct-who>span{display:flex;flex-direction:column;gap:calc(2 * var(--p))}
+.ct-k{font-size:calc(11 * var(--p));line-height:calc(16 * var(--p));text-transform:uppercase;letter-spacing:.05em;color:rgba(255,255,255,.6)}
+.ct-who b{font-weight:400;font-size:calc(20 * var(--p));line-height:calc(26 * var(--p));letter-spacing:-0.02em}
+.ct-pts{display:flex;flex-direction:column;gap:calc(8 * var(--p));margin:0;padding:calc(16 * var(--p)) 0 0;border-top:1px solid rgba(255,255,255,.14);list-style:none}
+.ct-pts li{position:relative;padding-left:calc(22 * var(--p));font-size:calc(15 * var(--p));line-height:calc(22 * var(--p));color:rgba(255,255,255,.85)}
+.ct-pts li::before{content:"";position:absolute;left:0;top:calc(6 * var(--p));width:calc(10 * var(--p));height:calc(6 * var(--p));border-left:1.5px solid var(--red-bright);border-bottom:1.5px solid var(--red-bright);transform:rotate(-45deg)}
+/* White button on the dark card; the painted hover fills it red. */
+.ct .ct-go{justify-content:center;height:calc(60 * var(--p));padding:0 calc(32 * var(--p));background:var(--white);color:var(--black);font-size:calc(17 * var(--p))}
+.ct .ct-go::before{background:var(--red)}
+.ct .ct-go:hover{color:var(--white)}
+.ct-m{display:flex;justify-content:space-between;align-items:center;gap:calc(12 * var(--p));margin:0;font-size:calc(13 * var(--p));line-height:calc(18 * var(--p));color:rgba(255,255,255,.62)}
 .ct-m a{color:var(--white);background:linear-gradient(currentColor,currentColor) 0 100%/100% 1px no-repeat;transition:background-size .4s}
 .ct-m a:hover{background-size:0 1px;background-position:100% 100%}
+
+/* As the section scrolls away it lifts off the black footer underneath: a shadow falls on the footer. */
+@supports (animation-timeline: view()){
+@media (min-width:1024px) and (prefers-reduced-motion:no-preference){
+.ct{animation:ctlift linear both;animation-timeline:view();animation-range:exit 0% exit 45%}
+}
+}
+@keyframes ctlift{to{box-shadow:0 calc(40 * var(--p)) calc(80 * var(--p)) rgba(0,0,0,.5)}}
+
 @media (prefers-reduced-motion:reduce){
+.ct-bg{animation:none;transform:none}
 .ct-l>span{animation:none}
 }
+
 @media (max-width:1023px){
-.ct{padding:96px 16px 32px}
-.ct-h{font-size:48px;line-height:46px}
-.ct-bk{flex-direction:column;align-items:stretch;padding:24px;margin-top:48px}
-.ct-who img{width:64px;height:64px}
-.ct .ct-go{justify-content:center;height:56px}
-}
-.ct .ov{color:rgba(255,255,255,.7)}
-@media (max-width:1023px){
-.ct-h{font-size:56px!important;line-height:52px!important}
+.ct{height:auto;min-height:100svh;max-height:none;padding:0 40px}
+.ct-in{min-height:100svh;padding:40px 0 48px}
+.ct-bot{flex-direction:column;align-items:stretch;gap:32px}
+.ct-c{gap:20px}
+.ct-h{font-size:48px;line-height:48px}
+.ct-p{font-size:16px;line-height:24px}
+.ct-bk{width:auto;max-width:440px;padding:20px;gap:18px;border-radius:24px}
+.ct-who img{width:52px;height:52px}
+.ct-who b{font-size:19px}
+.ct-pts li{font-size:15px}
+.ct .ct-go{height:56px;font-size:16px}
+.ct-m{font-size:13px}
 }
 @media (max-width:767px){
-.ct{padding-left:20px!important;padding-right:20px!important}
-.ct-h{font-size:40px!important;line-height:38px!important}
-/* The heading flows as one block with its own breaks: "Let's make your / website as strong / as your company." */
+.ct{padding:0 20px}
+.ct-h{font-size:34px;line-height:36px}
 .ct-l{display:contents}
 .ct-l>span{display:inline;animation:none}
 .ct-br{display:inline}
-@media (prefers-reduced-motion:no-preference){
-.ct-h{animation:ctf linear both;animation-timeline:view();animation-range:entry 20% cover 45%}
-}
+/* Phones: the photo is a square at the top fading into dark; the heading starts in the fade. */
+.ct{--ph:min(100vw, 560px)}
+.ct-bg{height:var(--ph);bottom:auto;object-position:42% 40%}
+.ct::after{bottom:auto;height:calc(var(--ph) * 1.08);background:linear-gradient(to bottom,rgba(11,13,11,.7) 0%,rgba(11,13,11,0) 30%,rgba(11,13,11,0) 45%,rgba(11,13,11,.75) 70%,var(--black-deep) 100%)}
+.ct-in{min-height:0;padding:calc(var(--ph) * .62) 0 48px;justify-content:flex-start}
+.ct-bk{max-width:none}
 }

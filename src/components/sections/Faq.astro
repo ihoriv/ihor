@@ -1,24 +1,43 @@
 ---
 import '../../styles/sections/faq.css';
-import Label from '../ui/Label.astro';
+import { Image } from 'astro:assets';
+import Button from '../ui/Button.astro';
+import avatar from '../../assets/people/ihor-avatar.jpg';
 import { faq } from '../../data/faq';
-const pad = (n: number) => String(n).padStart(2, '0');
+import { site } from '../../data/site';
 ---
 <section id="faq" class="fq" aria-label="FAQ">
-  <div class="fq-in">
-    <header class="fq-hd"><Label text="Before you book" /><h2>Straight answers <span class="ser">before we talk.</span></h2></header>
-    <div class="fq-list">
-      {faq.map((f, i) => (
-        <div class:list={['fq-i', i === 0 && 'on']}>
-          <h3 class="fq-h">
-            <button type="button" class="fq-b" id={`fqb${i}`} aria-expanded={i === 0 ? 'true' : 'false'} aria-controls={`fqp${i}`}>
-              <span class="fq-n" aria-hidden="true">{pad(i + 1)}</span>{' '}<span class="fq-q">{f.q}</span><span class="fq-t" aria-hidden="true"></span>
-            </button>
-          </h3>
-          <div class="fq-p" id={`fqp${i}`} role="region" aria-labelledby={`fqb${i}`}><div class="fq-pi"><p>{f.a}</p></div></div>
-        </div>
-      ))}
+  <div class="in g12">
+    <div class="fq-l">
+      <h2 class="fq-h2">Straight answers <span class="fq-hl">before we talk.</span></h2>
+      <p class="fq-sub">Pick a question and I’ll answer it right here.</p>
+      <ul class="fq-qs">
+        {faq.map((f, i) => <li><button type="button" class="fq-q" data-i={i}>{f.q}</button></li>)}
+      </ul>
+      <p class="fq-more">Didn’t find yours? <a href={`mailto:${site.email}`}>{site.email}</a></p>
     </div>
+
+    <!-- A chat with Ihor: questions go in on the right in black, answers come back on the left. -->
+    <div class="fq-chat">
+      <div class="fq-top">
+        <Image class="fq-av" src={avatar} alt="" width={96} height={96} />
+        <span class="fq-who"><b>{site.name}</b><span><i aria-hidden="true"></i>Online · answers in seconds</span></span>
+      </div>
+      <div class="fq-log" role="log" aria-live="polite">
+        <div class="fq-m fq-me"><p>Hi! I’m Ihor. Ask me anything before we talk.</p></div>
+      </div>
+      <div class="fq-in" aria-hidden="true">
+        <span class="fq-f"><span class="fq-ph">Choose a question</span><span class="fq-ty"></span></span>
+        <span class="fq-s">↑</span>
+      </div>
+    </div>
+
+    {faq.map((f, i) => (
+      <template id={`fqa${i}`} data-q={f.q}>
+        <p>{f.a}</p>
+        {i === faq.length - 1 && <Button href={site.booking} external label="book an intro call" size="sm" class="fq-go" />}
+      </template>
+    ))}
   </div>
 </section>
 

@@ -4,13 +4,8 @@ import Icon from '../ui/Icon.astro';
 import { site } from '../../data/site';
 import { messengers, socials, askAi } from '../../data/social';
 const year = new Date().getFullYear();
-const letters = [
-  { ch: 'i', w: 200 },
-  { ch: 'h', w: 430 },
-  { ch: 'o', w: 660 },
-  { ch: 'r', w: 900 },
-];
 ---
+<div class="ft-mk" aria-hidden="true"></div>
 <footer class="ft">
   <div class="ft-top g12">
     <div class="ft-id">
@@ -31,12 +26,9 @@ const letters = [
     </div>
   </div>
   <div class="ft-bot"><span>© {year} {site.name}</span><a href="/privacy/">Privacy policy</a><a href="/terms/">Terms</a></div>
-  <div class="ft-wm" aria-hidden="true"><p class="ft-w"><span class="wl">{letters.map((l) => <span data-w0={l.w}>{l.ch}</span>)}</span></p></div>
 </footer>
 
 <script>
   import { initClock } from '../../scripts/clock';
-  import { initWordmark } from '../../scripts/wordmark';
   initClock();
-  initWordmark();
 </script>

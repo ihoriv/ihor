@@ -4,7 +4,6 @@ import '../../styles/sections/legal.css';
 import Header from './Header.astro';
 import Footer from './Footer.astro';
 import Button from '../ui/Button.astro';
-import Label from '../ui/Label.astro';
 import { legalDocs, type LegalDoc } from '../../data/legal';
 import { site } from '../../data/site';
 
@@ -17,7 +16,6 @@ const host = new URL(site.url).host;
 
 <main class="lg">
   <header class="lg-hd" id="content" tabindex="-1">
-    <Label text="Legal" class="fade" />
     <h1 class="lg-t">
       <span class="lg-l"><span class="rise" style="animation-delay:.1s">{doc.heading[0]}</span></span>
       <span class="lg-l lg-l2"><span class="rise ser" style="animation-delay:.22s">{doc.heading[1]}</span></span>
@@ -35,7 +33,7 @@ const host = new URL(site.url).host;
     <nav class="lg-toc" aria-label="Contents">
       <span class="ov">(Contents)</span>
       <ol>
-        {doc.sections.map((s, i) => <li><a href={`#${s.id}`}><span class="ser">{pad(i + 1)}</span>{s.title}</a></li>)}
+        {doc.sections.map((s, i) => <li><a href={`#${s.id}`}><span class="lg-tn">{pad(i + 1)}</span>{s.title}</a></li>)}
       </ol>
     </nav>
 
@@ -43,7 +41,7 @@ const host = new URL(site.url).host;
       {doc.sections.map((s, i) => (
         <section class="lg-s" id={s.id} aria-labelledby={`${s.id}-h`}>
           <div class="lg-sh">
-            <span class="ser lg-n" aria-hidden="true">{pad(i + 1)}</span>
+            <span class="lg-n" aria-hidden="true">{pad(i + 1)}</span>
             <h2 id={`${s.id}-h`}>{s.title}</h2>
           </div>
           <div class="lg-sb">
@@ -72,18 +70,20 @@ const host = new URL(site.url).host;
   </div>
 </main>
 
+<div class="ft-zone">
 <section class="lg-end" aria-label="Questions">
   <div class="in">
     <div class="lg-q">
-      <p class="lg-qh">Questions about this page? <span class="ser">Just ask.</span></p>
+      <p class="lg-qh">Questions about this page? Just ask.</p>
       <div class="lg-qa">
         <a class="lg-qm" href={`mailto:${site.email}`}>{site.email}</a>
-        <Button href={site.booking} external label="book an intro call" variant="l" size="sm" />
+        <Button href={site.booking} external label="book an intro call" size="sm" />
       </div>
     </div>
-    <Footer />
   </div>
 </section>
+<Footer />
+</div>
 
 <script>
   import { initLegalToc } from '../../scripts/legal-toc';

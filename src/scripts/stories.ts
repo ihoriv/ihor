@@ -1,37 +1,82 @@
 /**
- * Client stories: videos play muted in the background while visible.
- * Clicking a card restarts its video with sound and controls; other cards go back to background mode.
- * Cards also stack while scrolling: --t (0..1) says how much the next card covers this one.
+ * Client stories: a one-review-per-slide slider.
+ * The current slide's video plays muted while the section is on screen; clicking it restarts it with sound and controls.
+ * Moving to another slide (arrows, tabs, arrow keys or a swipe) puts the old video back to muted and paused.
+ * The leaving slide keeps .out until the new video has wiped over it, so the change reads as one layer covering another.
  */
 export function initStories() {
-  const boxes = [...document.querySelectorAll<HTMLElement>('.cv-v')];
+  const root = document.querySelector<HTMLElement>('.cs');
+  const sl = root?.querySelector<HTMLElement>('.cs-sl');
+  if (!root || !sl) return;
+  const slides = [...sl.querySelectorAll<HTMLElement>('.cv')];
+  const tabs = [...root.querySelectorAll<HTMLElement>('.cs-tb')];
+  const count = root.querySelector('.cs-i');
+  let cur = 0, seen = false, outT = 0;
+
+  const vid = (s: HTMLElement) => s.querySelector('video')!;
   const play = (v: HTMLVideoElement) => v.play().catch(() => {});
-  const toBackground = (w: HTMLElement) => {
-    const v = w.querySelector('video')!;
-    w.classList.remove('on');
+  const toBackground = (s: HTMLElement) => {
+    const v = vid(s);
+    s.classList.remove('live');
     v.controls = false;
     v.muted = true;
     v.loop = true;
   };
 
-  const io = new IntersectionObserver(
-    (entries) =>
-      entries.forEach((e) => {
-        const w = e.target as HTMLElement;
-        const v = w.querySelector('video')!;
-        if (e.isIntersecting) {
-          if (v.paused && !w.classList.contains('on')) play(v);
-        } else if (!w.classList.contains('on')) v.pause();
-      }),
-    { threshold: 0.15 },
-  );
+  const go = (n: number, dir?: number) => {
+    n = (n + slides.length) % slides.length;
+    if (n === cur) return;
+    const old = slides[cur], next = slides[n];
+    sl.classList.toggle('back', (dir ?? n - cur) < 0);
+    slides.forEach((s) => s.classList.remove('out'));
+    toBackground(old);
+    vid(old).pause();
+    old.classList.replace('on', 'out');
+    old.inert = true;
+    void next.offsetWidth;
+    next.classList.add('on');
+    next.inert = false;
+    clearTimeout(outT);
+    outT = window.setTimeout(() => old.classList.remove('out'), 1000);
+    tabs.forEach((t, i) => t.setAttribute('aria-selected', String(i === n)));
+    if (count) count.textContent = String(n + 1).padStart(2, '0');
+    cur = n;
+    const v = vid(next);
+    v.preload = 'metadata';
+    v.currentTime = 0;
+    if (seen) play(v);
+  };
 
-  boxes.forEach((w) => {
-    io.observe(w);
-    const v = w.querySelector('video')!;
-    w.querySelector('.cv-o')?.addEventListener('click', () => {
-      boxes.forEach((o) => { if (o !== w && o.classList.contains('on')) toBackground(o); });
-      w.classList.add('on');
+  root.querySelectorAll<HTMLElement>('.cs-a').forEach((b) => b.addEventListener('click', () => go(cur + Number(b.dataset.go), Number(b.dataset.go))));
+  tabs.forEach((t, i) => t.addEventListener('click', () => go(i)));
+  root.addEventListener('keydown', (e) => {
+    if ((e.target as HTMLElement).closest('video')) return;
+    if (e.key === 'ArrowRight') go(cur + 1, 1);
+    if (e.key === 'ArrowLeft') go(cur - 1, -1);
+  });
+
+  // Swipe on touch screens; vertical scrolling stays with the page.
+  let sx = 0, sy = 0;
+  sl.addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+  sl.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) go(cur + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1);
+  }, { passive: true });
+
+  new IntersectionObserver(
+    ([e]) => {
+      seen = e.isIntersecting;
+      const s = slides[cur], v = vid(s);
+      if (seen) { if (v.paused && !s.classList.contains('live')) play(v); }
+      else if (!s.classList.contains('live')) v.pause();
+    },
+    { threshold: 0.2 },
+  ).observe(sl);
+
+  slides.forEach((s) => {
+    const v = vid(s);
+    s.querySelector('.cv-o')?.addEventListener('click', () => {
+      s.classList.add('live');
       v.loop = false;
       v.muted = false;
       v.currentTime = 0;
@@ -39,22 +84,9 @@ export function initStories() {
       play(v);
     });
     v.addEventListener('ended', () => {
-      toBackground(w);
+      toBackground(s);
       v.currentTime = 0;
       play(v);
     });
   });
-
-  const cards = [...document.querySelectorAll<HTMLElement>('.cv')];
-  const stack = () => {
-    cards.forEach((c, i) => {
-      const next = cards[i + 1];
-      if (!next) return c.style.setProperty('--t', '0');
-      const a = c.getBoundingClientRect(), b = next.getBoundingClientRect();
-      const t = Math.min(1, Math.max(0, 1 - (b.top - a.top) / c.offsetHeight));
-      c.style.setProperty('--t', t.toFixed(3));
-    });
-  };
-  window.addEventListener('scroll', stack, { passive: true });
-  stack();
 }

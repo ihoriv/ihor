@@ -1,7 +1,6 @@
 ---
 import '../../styles/sections/belief.css';
 import { Image } from 'astro:assets';
-import Label from '../ui/Label.astro';
 import { reviews } from '../../data/reviews';
 
 /* Each word is wrapped so it can slide up line by line when the block scrolls into view. */
@@ -13,7 +12,6 @@ const words = (t: string) => t.split(' ');
 <section class="bl2" aria-label="What I believe">
   <div class="in">
     <div class="g12 bl4-top">
-      <div class="bl4-side"><Label text="What I believe" /></div>
       <div class="bl2-t">
         <p class="bl4-p1">{words(lead).map((w) => <><span class="w"><span>{w}</span></span> </>)}</p>
         <p class="bl3-p2">{words(follow).map((w) => <><span class="w"><span>{w}</span></span> </>)}{words(accent).map((w) => <><span class="w r ser"><span>{w}</span></span> </>)}</p>

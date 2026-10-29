@@ -1,62 +1,62 @@
+.wk2{position:relative;overflow:clip;background:var(--white);color:var(--black);padding:calc(96 * var(--p)) calc(40 * var(--p)) calc(120 * var(--p))}
+.wk2-hd{align-items:end}
+.wk2-lead{grid-column:1/span 9;margin:calc(40 * var(--p)) 0 0;font-size:calc(40 * var(--p));line-height:calc(44 * var(--p));letter-spacing:-0.025em}
+.wk2-lead .ser{font-size:1.06em}
+
+/* Asymmetric board: two works per row on the 12-column grid, a larger and a smaller one, swapping sides and staggered by --top. */
+.wk2-g{--cap:calc(48 * var(--p));display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:calc(24 * var(--p));row-gap:calc(80 * var(--p));align-items:start;margin-top:calc(96 * var(--p))}
+.wk2-t{position:relative;display:flex;flex-direction:column;min-width:0;margin-top:calc(var(--top) * var(--p));perspective:calc(1400 * var(--p))}
+.wk2-t:hover{z-index:2}
+/* Tilt layer (scripts/work-tilt.ts): the image, tag, disc and name turn toward the cursor as one card and lift, with the tag and the disc floating above the image in 3D. */
+.wk2-tl{position:relative;transform-style:preserve-3d;transform:translateZ(calc(var(--z,0) * 40 * var(--p))) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) rotateZ(var(--rz,0deg))}
+.wk2-t:hover .wk2-tl{will-change:transform}
+/* Every work gets the same caption (name below) and the same industry tag (top-left on the image). */
+.wk2-c{flex:none;height:var(--cap);display:flex;align-items:center;font-size:calc(16 * var(--p));line-height:calc(24 * var(--p));letter-spacing:-0.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* Liquid-glass tag: frosted light fill with a specular sheen, a bright top rim and a soft lift, readable on white and on dark photos. */
+.wk2-k{position:absolute;left:calc(12 * var(--p));top:calc(12 * var(--p));z-index:3;transform:translateZ(calc(var(--z,0) * 110 * var(--p)));height:calc(20 * var(--p));display:inline-flex;align-items:center;padding:0 calc(8 * var(--p));border-radius:calc(999 * var(--p));background:linear-gradient(160deg,rgba(255,255,255,.7) 0%,rgba(255,255,255,.42) 48%,rgba(255,255,255,.55) 100%);-webkit-backdrop-filter:blur(10px) saturate(190%) brightness(1.08);backdrop-filter:blur(10px) saturate(190%) brightness(1.08);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),inset 0 -1px 0 rgba(255,255,255,.25),inset 0 0 0 .5px rgba(255,255,255,.55),0 0 0 .5px rgba(15,17,15,.1),0 4px 14px rgba(15,17,15,.14);color:rgba(15,17,15,.86);font-size:calc(10.5 * var(--p));line-height:calc(14 * var(--p));letter-spacing:.005em;text-transform:lowercase;pointer-events:none}
+/* Scroll drift: while it crosses the screen each tile rises by its own --d, slides sideways by --x and turns by --r,
+   passing through straight in the middle. Each tile in a row eases differently, so their speeds keep changing against each other. */
 @supports (animation-timeline: view()){
-#cases{margin-top:calc(-80 * var(--p));padding-top:calc(96 * var(--p))!important;--cv:calc(80 * var(--p));-webkit-mask-image:radial-gradient(70% calc(max(var(--cv),1px) * 3.333) at 50% calc(max(var(--cv),1px) * 3.333),#000 99.7%,transparent 100%),linear-gradient(#000,#000);mask-image:radial-gradient(70% calc(max(var(--cv),1px) * 3.333) at 50% calc(max(var(--cv),1px) * 3.333),#000 99.7%,transparent 100%),linear-gradient(#000,#000);-webkit-mask-size:100% max(var(--cv),1px),100% calc(100% - var(--cv) + 1px);mask-size:100% max(var(--cv),1px),100% calc(100% - var(--cv) + 1px);-webkit-mask-position:top,bottom;mask-position:top,bottom;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;animation:cvflat linear both;animation-timeline:view();animation-range:entry 0% entry 75%}
+@media (prefers-reduced-motion:no-preference){
+.wk2-t{animation:wkd cubic-bezier(.3,.1,.7,.9) both;animation-timeline:view();animation-range:cover 0% cover 100%}
+.wk2-t:nth-child(2n){animation-timing-function:cubic-bezier(.55,0,.45,1)}
+.wk2-t:nth-child(3n){animation-timing-function:cubic-bezier(.15,.45,.85,.55)}
 }
-.case{display:flex;flex-direction:column;gap:calc(24 * var(--p))}
-.case-m{overflow:hidden;background:var(--green)}
+}
+@keyframes wkd{
+from{transform:translate(calc(var(--x) * -1 * var(--p)),calc(var(--d) * 1 * var(--p))) rotate(calc(var(--r) * -1deg))}
+50%{transform:translate(0,0) rotate(0deg)}
+to{transform:translate(calc(var(--x) * 1 * var(--p)),calc(var(--d) * -1 * var(--p))) rotate(calc(var(--r) * 1deg))}}
+
+/* Media with the WebGL smear (scripts/case-hover.ts) and the red "view website" disc. */
+.case-m{position:relative;isolation:isolate;aspect-ratio:4/3;overflow:hidden;background:#ececec;box-shadow:0 0 0 rgba(15,17,15,0);transition:box-shadow .6s cubic-bezier(.16,.84,.24,1)}
+.case:hover .case-m{box-shadow:0 calc(10 * var(--p)) calc(24 * var(--p)) calc(-12 * var(--p)) rgba(15,17,15,.12)}
+/* Glare: a soft highlight that sits where the cursor is, as if light catches the tilted surface.
+   .case-m is isolated so the blend stays inside it; otherwise Chrome isolates the tilt layer and flattens the floating tag and disc. */
+.wk2-gl{position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.45),rgba(255,255,255,0) 55%);mix-blend-mode:soft-light;opacity:0;transition:opacity .5s}
+.case:hover .wk2-gl{opacity:1}
 .case-m img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.2s cubic-bezier(.16,.84,.24,1)}
-.case-m{position:relative}
-.case-m img{clip-path:inset(0);transition:transform 1.2s cubic-bezier(.16,.84,.24,1),clip-path .9s cubic-bezier(.16,.84,.24,1)}
-.case:hover .case-m img{transform:scale(1.08);clip-path:inset(calc(16 * var(--p)))}
-.case-m canvas{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:1;pointer-events:none;opacity:0;clip-path:inset(0);transition:transform 1.2s cubic-bezier(.16,.84,.24,1),clip-path .9s cubic-bezier(.16,.84,.24,1)}
+.case:hover .case-m img{transform:scale(1.05)}
+.case-m canvas{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:1;pointer-events:none;opacity:0;transition:transform 1.2s cubic-bezier(.16,.84,.24,1)}
 .case-m canvas.on{opacity:1}
-.case:hover .case-m canvas{transform:scale(1.08);clip-path:inset(calc(16 * var(--p)))}
-.case-m::after{content:"view website ↗";position:absolute;left:50%;top:50%;pointer-events:none;width:calc(136 * var(--p));height:calc(136 * var(--p));margin:calc(-68 * var(--p)) 0 0 calc(-68 * var(--p));border-radius:50%;background:var(--red);color:var(--white);display:grid;place-items:center;font-size:calc(12 * var(--p));line-height:calc(16 * var(--p));letter-spacing:.05em;text-transform:uppercase;transform:scale(0) rotate(-45deg);transition:transform .7s cubic-bezier(.2,.8,.2,1);z-index:2}
-.case:hover .case-m::after{transform:scale(1) rotate(0)}
-.grid2 .case{transition:opacity .5s}
-.grid2:hover .case:not(:hover){opacity:.45}
-.case-i{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:calc(24 * var(--p));align-items:start;padding-top:calc(24 * var(--p));border-top:1px solid rgba(255,255,255,.3)}
-.case:hover .go::after{right:0}
-.stack{timeline-scope:--c2,--c3,--c4;display:flex;flex-direction:column;gap:calc(64 * var(--p))}
-.sc{position:sticky;background:var(--black);padding-top:calc(16 * var(--p))}
-.sc{padding-top:calc(16 * var(--p))}
-.sc .case{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:calc(24 * var(--p));gap:0 calc(24 * var(--p))}
-.sc .case-m{grid-column:1/span 8;aspect-ratio:4/3}
-.sc .case-i{grid-column:9/span 4;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:calc(40 * var(--p));padding:calc(24 * var(--p)) 0 0;border-top:1px solid rgba(255,255,255,.3)}
-.sc-in{transform-origin:50% 0;animation:sink linear both;animation-range:cover 0% cover 45%}
-@keyframes sink{to{transform:scale(.9);filter:brightness(.45)}}
-.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:calc(24 * var(--p));row-gap:calc(80 * var(--p))}
-.grid2 .case-m{aspect-ratio:3/2}
-.grid2 .case-i{grid-template-columns:repeat(6,minmax(0,1fr))}
-@media (prefers-reduced-motion:reduce){
-.sc-in{animation:none}
-}
+.case:hover .case-m canvas{transform:scale(1.05)}
+.wk2-tl::after{content:"view website";position:absolute;left:50%;top:calc((100% - var(--cap)) / 2);z-index:3;pointer-events:none;width:calc(88 * var(--p));height:calc(88 * var(--p));margin:calc(-44 * var(--p)) 0 0 calc(-44 * var(--p));padding:0 calc(12 * var(--p));box-sizing:border-box;border-radius:50%;background:var(--black);color:var(--white);display:grid;place-items:center;text-align:center;font-size:calc(11 * var(--p));line-height:calc(14 * var(--p));letter-spacing:.05em;text-transform:uppercase;transform:translateZ(calc(var(--z,0) * 150 * var(--p)));scale:0;rotate:-45deg;transition:scale .7s cubic-bezier(.2,.8,.2,1),rotate .7s cubic-bezier(.2,.8,.2,1)}
+.case:hover .wk2-tl::after{scale:1;rotate:0deg}
+.wk2-t:focus-visible{outline-offset:calc(4 * var(--p))}
+
 @media (max-width:1023px){
-.cs-meta{grid-template-columns:repeat(2,minmax(0,1fr))!important;row-gap:16px}
-.cs-meta>span{grid-column:auto!important;text-align:left!important}
-.cs-lead{width:auto!important;margin-top:56px!important;font-size:32px!important;line-height:38px!important}
-.cs-sel{margin-top:80px!important}
-.sc{position:relative!important;top:auto!important}
-.sc-in{animation:none!important;transform:none!important;filter:none!important}
-.stack{gap:56px}
-.sc .case{grid-template-columns:1fr;row-gap:16px}
-.sc .case-m,.sc .case-i{grid-column:1/-1}
-.sc .case-i{gap:12px;padding-top:16px}
-.sc .case-i h3{font-size:32px!important;line-height:34px!important}
-.grid2{row-gap:48px}
-.grid2 .case-i h3{font-size:24px!important;line-height:30px!important}
+.wk2{padding:80px 40px 96px}
+.wk2-lead{grid-column:1/-1}
+.wk2-hd{row-gap:24px}
+.wk2-lead{font-size:32px;line-height:38px;margin-top:24px}
+.wk2-g{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:56px}
+.wk2-t{grid-column:auto!important;grid-row:auto!important;margin-top:0;animation:none!important}
+.wk2-g{--cap:44px}
+.wk2-c{font-size:15px;line-height:22px}
+.wk2-k{left:10px;top:10px;height:20px;padding:0 8px;font-size:11px}
 }
 @media (max-width:767px){
-#cases{padding-left:20px!important;padding-right:20px!important}
-.cs-lead{font-size:26px!important;line-height:32px!important}
-.grid2{grid-template-columns:1fr!important}
-.sc .case-i h3{font-size:28px!important;line-height:30px!important}
-/* Phones: works 05-08 continue the list as the same cards as 01-04, without the "more work" label or links. */
-.cs-more{display:none!important}
-.grid2{margin-top:72px!important;row-gap:72px}
-.grid2 .case{gap:16px}
-.grid2 .case-m{aspect-ratio:4/3}
-.grid2 .case-i{display:flex;flex-direction:column;gap:24px;padding-top:16px}
-.grid2 .case-i>.ser{font-size:24px!important;line-height:30px!important}
-.grid2 .case-i h3{font-size:28px!important;line-height:30px!important}
-.grid2 .case-i>.meta{display:none}
+.wk2{padding:72px 20px 80px}
+.wk2-lead{font-size:26px;line-height:32px}
+.wk2-g{grid-template-columns:1fr;margin-top:40px}
 }
